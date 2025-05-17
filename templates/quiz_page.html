@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Trial Quiz</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <div id="quiz-form">
+      <h1>Quiz</h1>
+      <form action="/quiz?username=$$USERNAME$$" method="POST">
+        <p>Choose your pet.</p>
+        <label
+          ><input type="radio" name="q1" value="parrot" required />
+          parrot</label
+        ><br />
+        <label
+          ><input type="radio" name="q1" value="duck" required /> duck</label
+        ><br />
+        <label
+          ><input type="radio" name="q1" value="rabbit" required />
+          rabbit</label
+        ><br />
+        <label
+          ><input type="radio" name="q1" value="hamster" required />
+          hamster</label
+        ><br />
+        <label><input type="radio" name="q1" value="cat" required /> cat</label
+        ><br />
+        <label><input type="radio" name="q1" value="dog" required /> dog</label
+        ><br />
+
+        <p>Gender</p>
+        <label
+          ><input type="radio" name="q2" value="female" required />
+          female</label
+        ><br />
+        <label
+          ><input type="radio" name="q2" value="male" required /> male</label
+        ><br />
+
+        <p>Where does your pet prefer spending most of its time?</p>
+        <label
+          ><input
+            type="radio"
+            name="q3"
+            value="mostly indoors, enjoying quiet and comfort"
+            required
+          />
+          mostly indoors, enjoying quiet and comfort</label
+        ><br />
+        <label
+          ><input
+            type="radio"
+            name="q3"
+            value="indoors but curious and playful"
+            required
+          />
+          indoors but curious and playful</label
+        ><br />
+        <label
+          ><input
+            type="radio"
+            name="q3"
+            value="mostly outdoors, exploring and energetic"
+            required
+          />
+          mostly outdoors, exploring and energetic</label
+        ><br />
+        <label
+          ><input
+            type="radio"
+            name="q3"
+            value="outdoors but cautious and observant"
+            required
+          />
+          outdoors but cautious and observant</label
+        ><br />
+
+        <p>When is your pet most energetic?</p>
+        <label
+          ><input type="radio" name="q4" value="morning" required />
+          morning</label
+        ><br />
+        <label
+          ><input type="radio" name="q4" value="afternoon" required />
+          afternoon</label
+        ><br />
+        <label
+          ><input type="radio" name="q4" value="evening" required />
+          evening</label
+        ><br />
+        <label
+          ><input type="radio" name="q4" value="night" required /> night</label
+        ><br />
+
+        <p>How does your pet behave around strangers?</p>
+        <label
+          ><input type="radio" name="q5" value="social" required />
+          social</label
+        ><br />
+        <label
+          ><input type="radio" name="q5" value="reserved" required />
+          reserved</label
+        ><br />
+        <label
+          ><input type="radio" name="q5" value="curious" required />
+          curious</label
+        ><br />
+        <label><input type="radio" name="q5" value="shy" required /> shy</label
+        ><br />
+
+        <p>What best describes your pet's reaction to loud noises?</p>
+        <label
+          ><input type="radio" name="q6" value="calm" required /> calm</label
+        ><br />
+        <label
+          ><input type="radio" name="q6" value="anxious" required />
+          anxious</label
+        ><br />
+        <label
+          ><input type="radio" name="q6" value="alert" required /> alert</label
+        ><br />
+        <label
+          ><input type="radio" name="q6" value="indifferent" required />
+          indifferent</label
+        ><br />
+
+        <p>How does your pet prefer to play?</p>
+        <label
+          ><input type="radio" name="q7" value="solo" required /> solo</label
+        ><br />
+        <label
+          ><input type="radio" name="q7" value="owner" required /> with
+          owner</label
+        ><br />
+        <label
+          ><input type="radio" name="q7" value="with other pets" required />
+          with other pets</label
+        ><br />
+        <label
+          ><input type="radio" name="q7" value="not playful" required /> not
+          playful</label
+        ><br />
+
+        <p>How does your pet respond to new environments?</p>
+        <label
+          ><input type="radio" name="q8" value="explores" required />
+          explores</label
+        ><br />
+        <label
+          ><input type="radio" name="q8" value="cautious" required />
+          cautious</label
+        ><br />
+        <label
+          ><input type="radio" name="q8" value="avoids" required />
+          avoids</label
+        ><br />
+        <label
+          ><input type="radio" name="q8" value="comfortable" required />
+          comfortable</label
+        ><br />
+
+        <p>How does your pet react when left alone?</p>
+        <label
+          ><input type="radio" name="q9" value="relaxed" required />
+          relaxed</label
+        ><br />
+        <label
+          ><input type="radio" name="q9" value="anxious" required />
+          anxious</label
+        ><br />
+        <label
+          ><input type="radio" name="q9" value="destructive" required />
+          destructive</label
+        ><br />
+        <label
+          ><input type="radio" name="q9" value="quiet" required /> quiet</label
+        ><br />
+
+        <p>What kind of routine does your pet prefer?</p>
+        <label
+          ><input type="radio" name="q10" value="same every day" required />
+          same every day</label
+        ><br />
+        <label
+          ><input type="radio" name="q10" value="some variation" required />
+          some variation</label
+        ><br />
+        <label
+          ><input type="radio" name="q10" value="no routine" required /> no
+          routine</label
+        ><br />
+        <label
+          ><input type="radio" name="q10" value="depends on mood" required />
+          depends on mood</label
+        ><br />
+
+        <p>How does your pet communicate its needs?</p>
+        <label
+          ><input type="radio" name="q11" value="barks/meows" required />
+          barks/meows</label
+        ><br />
+        <label
+          ><input
+            type="radio"
+            name="q11"
+            value="body
+          language"
+            required
+          />
+          body language</label
+        ><br />
+        <!--  <label
+          ><input type="radio" name="q11" value="sensitive" required />
+          reserved</label
+        ><br /> -->
+        <label
+          ><input type="radio" name="q11" value="quiet" required /> quiet</label
+        ><br />
+        <label
+          ><input type="radio" name="q11" value="talks/talktive" required />
+          talks/talktive</label
+        ><br />
+
+        <p>How does your pet respond to training?</p>
+        <label
+          ><input type="radio" name="q12" value="eager" required /> eager</label
+        ><br />
+        <label
+          ><input type="radio" name="q12" value="stubborn" required />
+          stubborn</label
+        ><br />
+        <label
+          ><input type="radio" name="q12" value="playful" required />
+          playful</label
+        ><br />
+        <label
+          ><input type="radio" name="q12" value="uninterested" required />
+          uninterested</label
+        ><br />
+
+        <div id="submit-trial-quiz">
+          <button type="submit" id="submit-quiz-btn">Submit</button>
+        </div>
+        <a href="/profile/$$USERNAME$$" id="go-back-profile-btn"> Cancel </a>
+      </form>
+    </div>
+
+    <script src="static/js/edit_quiz.js"></script>
+  </body>
+</html>

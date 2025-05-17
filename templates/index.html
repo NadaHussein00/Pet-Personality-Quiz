@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pet Personality Test</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <div id="home-page-content">
+      <h1>Welcome To The Pet Personality Quiz!</h1>
+
+      <div id="user-choice">
+        <div id="sign-up">
+          <div id="signup-paragraph">
+            You can sign up to do the quizes and create a profile for your pet!
+          </div>
+          <a href="/signup">
+            <button id="sign-up-btn" class="nav-btn">Sign Up Now!</button>
+          </a>
+        </div>
+
+        <div id="trial-quiz">
+          <p>You can have a trial quiz!</p>
+          <a id="trial-quiz-btn"> Try Your First Quiz Now! </a>
+        </div>
+      </div>
+      <div id="trial-quiz-note-modal" class="modal">
+        <div id="trial-quiz-note-modal-content">
+          <button
+            class="close-btn"
+            id="close-trial-quiz-note-modal-btn"
+            aria-label="Close modal"
+          >
+            &times;
+          </button>
+          <p>
+            This is a trial quiz. No results are saved and no pet profile is
+            created. To unlock all features, access the full set of questions,
+            and create a pet profile with unlimited quiz attempts, please sign
+            up!
+          </p>
+          <div>
+            <a href="/signup" id="signup-trial-note">Sign Up</a>
+            <a href="/trial_quiz" id="goto-trial-quiz"> Go to Trial Quiz </a>
+          </div>
+        </div>
+      </div>
+      <div id="loggedin-user">
+        <div id="signup-paragraph">Do you have an account already?</div>
+        <a href="/login" id="login-choice-btn">Login Now! </a>
+      </div>
+    </div>
+    <script src="static/js/index.js"></script>
+  </body>
+</html>

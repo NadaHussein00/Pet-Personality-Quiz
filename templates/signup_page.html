@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <div id="signup-page-content">
+      <h1>Please fill in all the REQUIRED fields:</h1>
+      <form method="POST" action="/signup" id="signup-form" novalidate>
+        <label
+          >Enter your first name:
+          <input
+            type="text"
+            id="first-name-reg"
+            name="firstname"
+            value="$$FIRSTNAME$$"
+            required
+          />
+          <p class="req-star">*</p>
+          <span class="error-message" id="error-firstname-reg"
+            >$$ERROR_FIRSTNAME$$</span
+          > </label
+        ><br />
+        <label
+          >Enter your last name:
+          <input
+            type="text"
+            id="last-name-reg"
+            name="lastname"
+            value="$$LASTNAME$$"
+            required
+          />
+          <p class="req-star">*</p>
+          <span class="error-message" id="error-lastname-reg"
+            >$$ERROR_LASTNAME$$</span
+          > </label
+        ><br />
+
+        <label
+          >Gender:
+          <select name="gender" id="gender-drop-down">
+            <option value="">- Select Gender -</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </label>
+        <br />
+        <label
+          >Enter your email:
+          <input
+            type="text"
+            id="email-reg"
+            name="email"
+            required
+            value="$$EMAIL$$"
+          />
+          <p class="req-star">*</p>
+          <span class="error-message" id="error-email-reg"
+            >$$ERROR_EMAIL$$</span
+          > </label
+        ><br />
+        <label
+          >Enter your username:
+          <input
+            type="text"
+            id="username-reg"
+            name="username"
+            value="$$USERNAME$$"
+            required
+          />
+          <p class="req-star">*</p>
+          <span class="error-message" id="error-username-reg"
+            >$$ERROR_USERNAME$$</span
+          > </label
+        ><br />
+        <label
+          >Password:
+          <input type="password" name="password" id="password-reg" required />
+          <p class="req-star">*</p>
+          <span class="error-message" id="error-password-reg"></span> </label
+        ><br />
+        <label
+          >Password confirmation:
+          <input
+            type="password"
+            name="password-confirm"
+            id="password-confirm-reg"
+            required
+          />
+          <p class="req-star">*</p>
+          <span
+            class="error-message"
+            id="error-confirm-pass-reg"
+          ></span> </label
+        ><br />
+        <div class="bio-box">
+          <label>
+            Bio (optional):
+            <textarea
+              id="bio-reg"
+              name="bio"
+              rows="4"
+              cols="40"
+              placeholder="Tell us about yourself..."
+            >
+$$BIO$$</textarea
+            >
+            <span class="error-message" id="error-bio-reg">$$ERROR_BIO$$</span>
+          </label>
+        </div>
+
+        <br />
+
+        <button type="submit" id="register-btn">Register Now!</button>
+      </form>
+
+      <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+
+    <script type="module" src="static/js/signup_form.js"></script>
+  </body>
+</html>

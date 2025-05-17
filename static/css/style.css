@@ -1,0 +1,276 @@
+body {
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqgdMmAwSpZFTVNXo8dWPNk_y8btlnhfKJVA&s");
+  background-repeat: repeat;
+  background-attachment: fixed;
+  font-family: "Segoe UI";
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 0;
+}
+
+#home-page-content {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 30px 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  color: #222;
+  font-size: 18px;
+  /* font-weight: 200; */
+}
+h1 {
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 1.9rem;
+}
+
+#user-choice,
+#loggedin-user {
+  margin-top: 20px;
+}
+
+#signup-paragraph {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.nav-btn,
+.trial-note-button-group button,
+#submit-trial-quiz button,
+#signup-page-content #register-btn,
+#trial-quiz #trial-quiz-btn,
+#trial-quiz-form #cancel,
+#trial-quiz-note-modal-content #signup-trial-note,
+#trial-quiz-note-modal-content #goto-trial-quiz,
+#loggedin-user #login-choice-btn,
+#login-page-content #login-btn,
+#profile-page-content #first-quiz-btn,
+#profile-page-content #another-quiz-btn,
+#profile-page-content #view-quizzes-btn,
+#profile-page-content #logout-btn,
+#profile-page-content #edit-profile-btn,
+#quiz-form #go-back-profile-btn,
+#quiz-history-container .manage-history-btns,
+#quiz-history-content #go-back-to-profile-btn,
+#edit-profile-page #save-changes-btn,
+#edit-profile-page #delete-account-btn,
+#edit-profile-page #go-back-profile-btn,
+#delete-quiz-modal #cancel-delete-btn,
+#delete-quiz-modal #confirm-delete-btn {
+  display: inline-block; /* allow width, height, padding */
+  width: 100%;
+  padding: 14px 0;
+  margin: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+#quiz-history-content #go-back-to-profile-btn {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  width: 20%;
+}
+
+.nav-btn:hover,
+.trial-note-button-group button:hover,
+#submit-trial-quiz button:hover,
+#trial-quiz-page button:hover,
+#signup-page-content #register-btn:hover,
+#login-page-content #login-btn:hover,
+#profile-page-content #first-quiz-btn:hover,
+#profile-page-content #another-quiz-btn:hover,
+#profile-page-content #view-quizzes-btn:hover,
+#trial-quiz-note-modal-content #signup-trial-note:hover,
+#trial-quiz-note-modal-content #goto-trial-quiz:hover,
+#trial-quiz #trial-quiz-btn:hover,
+#trial-quiz-form #cancel:hover,
+#loggedin-user #login-choice-btn:hover,
+#profile-page-content #logout-btn:hover,
+#profile-page-content #edit-profile-btn:hover,
+#quiz-form #go-back-profile-btn:hover,
+#quiz-history-container .manage-history-btns:hover,
+#quiz-history-content #go-back-to-profile-btn:hover,
+#edit-profile-page #save-changes-btn:hover,
+#edit-profile-page #delete-account-btn:hover,
+#edit-profile-page #go-back-profile-btn:hover,
+#delete-quiz-modal #cancel-delete-btn:hover,
+#delete-quiz-modal #confirm-delete-btn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 14px rgba(0, 86, 179, 0.5);
+}
+
+#trial-quiz-note-modal-content,
+#signup-page-content,
+#trial-quiz-result-page,
+#trial-quiz-form,
+#login-page-content,
+#profile-page-content,
+#quiz-form,
+#edit-profile-page,
+#delete-quiz-modal-content,
+#quiz-history-content,
+#quiz-history-container .quiz-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  min-height: 200px;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  /* text-align: center; */
+  color: #222;
+}
+
+.edit-profile-row {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#signup-page-content,
+#trial-quiz-result-page,
+#login-page-content,
+#profile-page-content {
+  text-align: center;
+}
+
+#trial-quiz-note-modal-content,
+#delete-quiz-modal-content {
+  height: 400px;
+  background-color: white;
+}
+
+#quiz-history-content {
+  max-width: 1000px;
+  text-align: center;
+}
+
+#greeting {
+  margin-bottom: 0px; /* reduce space below h1 */
+}
+#profile-page-content > p {
+  font-size: 14px;
+  color: #6e6a6a;
+  margin-top: 0px;
+  margin-bottom: 40px;
+}
+
+#quiz-history-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.trial-note-button-group {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.bio-box {
+  display: flex;
+  align-items: center; /* vertical centering */
+  gap: 10px;
+}
+
+.bio-box label {
+  display: flex;
+  align-items: center; /* vertical centering */
+  gap: 10px;
+}
+
+#registeration-success {
+  display: none;
+  color: #155724;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.req-star {
+  color: red;
+  display: inline-block;
+}
+
+.error-message-log {
+  display: block;
+  color: red;
+}
+
+.error-message {
+  display: block;
+  color: red;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}
+
+/* Close button (x) */
+.close-btn {
+  color: #aaa;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: black;
+}
+
+/* Buttons */
+#cancel-delete-btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#confirm-delete-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.modified-at {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}

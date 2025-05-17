@@ -1,0 +1,12 @@
+Choose your pet.;parrot:talkative=3,social=2;duck:adventurous=3,calm=2;rabbit:shy=3,calm=4;hamster:active=3,independent=4;cat:independent=4,curious=3;dog:social=4,active=3
+Gender;female:nurturing=5,attentive=3;male:protective=5,loyal=3
+Where does your pet prefer spending most of its time?;mostly indoors, enjoying quiet and comfort:calm=4,reserved=2;indoors but curious and playful:active=3,social=2;mostly outdoors, exploring and energetic:active=4,adventurous=3;outdoors but cautious and observant:reserved=3,sensitive=2
+When is your pet most energetic?;morning:energetic=3;afternoon:active=2;evening:calm=2;night:independent=2
+How does your pet behave around strangers?;social:social=3;reserved:reserved=3;curious:adventurous=2;shy:sensitive=2
+What best describes your pet’s reaction to loud noises?;calm:calm=3;anxious=sensitive=3;alert=active=2;indifferent=calm=1
+How does your pet prefer to play?;solo:independent=3;with owner:social=3;with other pets:social=2;not playful:reserved=2
+How does your pet respond to new environments?;explores:adventurous=3;cautious:reserved=2;avoids:shy=2;comfortable:calm=3
+How does your pet react when left alone?;relaxed:calm=3;anxious:sensitive=3;destructive:active=2;quiet:reserved=2
+What kind of routine does your pet prefer?;same every day:organized=3;some variation:adventurous=2;no routine:independent=2;depends on mood:sensitive=2
+How does your pet communicate its needs?;barks/meows:social=3;body language:reserved=2;quiet:independent=2;talks/talktive:social=3
+How does your pet respond to training?;eager:organized=3;stubborn:independent=3;playful:energetic=2;uninterested:reserved=2

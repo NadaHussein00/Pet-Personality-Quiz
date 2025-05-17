@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <!-- Store username in data attribute -->
+    <div
+      id="profile-page-content"
+      data-username="$$USERNAME$$"
+      data-firstname="$$FIRSTNAME$$"
+      data-quiz-history="$$QUIZ_HISTORY_JSON$$"
+    >
+      <h1 id="greeting">Welcome, &&FIRSTNAME&&!</h1>
+      <p>$$USERNAME$$</p>
+      <p>$$BIO$$</p>
+
+      <div id="chaging-buttons">
+        <button id="first-quiz-btn" style="display: none">
+          Take Your First Quiz
+        </button>
+        <button id="another-quiz-btn" style="display: none">
+          Take Another Quiz
+        </button>
+        <button id="view-quizzes-btn" style="display: none">
+          View Previous Quizzes
+        </button>
+      </div>
+      <div id="permenant-buttons">
+        <button id="edit-profile-btn">Edit Profile</button>
+        <a id="logout-btn" href="/logout">Logout</a>
+        <!-- <button id="logout-btn">Logout</button> -->
+      </div>
+    </div>
+
+    <script src="/static/js/user_profile.js"></script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <div id="edit-profile-page">
+      <div id="message"></div>
+      <h1>Edit Profile</h1>
+
+      <form id="edit-profile-form" novalidate>
+        <div class="edit-profile-row">
+          <label
+            >First Name:
+            <input type="text" id="first-name" name="first_name" />
+            <span class="error-message" id="error-firstname"></span
+          ></label>
+        </div>
+        <br />
+
+        <div class="edit-profile-row">
+          <label
+            >Last Name: <input type="text" id="last-name" name="last_name" />
+            <span class="error-message" id="error-lastname"></span>
+          </label>
+        </div>
+        <br />
+
+        <div class="edit-profile-row">
+          <label
+            >Password: <input type="password" id="password" name="password" />
+            <span class="error-message" id="error-password-edit"></span>
+          </label>
+        </div>
+        <br />
+
+        <div class="edit-profile-row">
+          <label
+            >Confirm Password:
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+            />
+            <span class="error-message" id="error-confirm-pass-edit"></span>
+          </label>
+        </div>
+        <br />
+
+        <div class="edit-profile-row">
+          <div class="bio-box">
+            <label>
+              Bio (optional):
+              <textarea
+                id="bio-edit"
+                name="bio"
+                rows="4"
+                cols="40"
+                placeholder="Tell us about yourself..."
+              ></textarea>
+              <span class="error-message" id="error-bio-edit"></span>
+            </label>
+          </div>
+        </div>
+
+        <br />
+
+        <button type="submit" id="save-changes-btn">Save Changes</button>
+        <a href="/profile/$$USERNAME$$" id="go-back-profile-btn">
+          Go Back to Profile
+        </a>
+      </form>
+
+      <!-- Delete Account Confirmation Modal -->
+    </div>
+
+    <script type="module" src="/static/js/validate_form.js"></script>
+    <script type="module" src="/static/js/edit_profile.js"></script>
+  </body>
+</html>

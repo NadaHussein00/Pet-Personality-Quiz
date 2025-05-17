@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <div id="login-page-content">
+      <div id="registeration-success">
+        Registration successful! You can now log in.
+      </div>
+      <h1>LOGIN:</h1>
+      <form method="POST" action="/login" id="login-form" novalidate>
+        <label>
+          Email:
+          <input type="text" id="email-log" name="email" required />
+          <span class="error-message-log" id="error-email-log"
+            >$$ERROR_EMAIL$$</span
+          >
+        </label>
+        <br />
+        <label>
+          Password:
+          <input type="password" id="pass-log" name="password" required />
+
+          <span class="error-message-log" id="error-pass-log"
+            >$$ERROR_PASS$$</span
+          >
+        </label>
+        <br />
+        <button type="submit" id="login-btn">LOGIN</button>
+      </form>
+    </div>
+
+    <!--   <script src="static/JS/signupSuccess.js"></script> -->
+    <script src="static/js/signup_success.js"></script>
+  </body>
+</html>
