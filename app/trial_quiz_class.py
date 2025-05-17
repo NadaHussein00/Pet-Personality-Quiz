@@ -1,5 +1,3 @@
-
-
 from app.quiz_class import Quiz
 
 class TrialQuiz(Quiz):
@@ -27,11 +25,20 @@ class TrialQuiz(Quiz):
 
         return trait_scores
 
-    def get_final_result(self, trait_scores):
+    def get_final_result(self, trait_scores,answers):
         if not trait_scores:
             return "No traits detected."
 
         top_trait = max(trait_scores, key=trait_scores.get)
+        description = self.get_description(top_trait)
+        pet_type = answers.get("q1")
+        return {
+            "dominant_trait": top_trait.capitalize(),
+            "description": description,
+            "pet_type":pet_type.capitalize()
+        }
+
+
         description = self.get_description(top_trait)
         #return f"Dominant trait: {top_trait.capitalize()}\n\n{description}"
         #return f"Dominant trait: {top_trait.capitalize()}<br><br>{description}"
