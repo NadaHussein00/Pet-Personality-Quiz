@@ -1,4 +1,3 @@
-
 class Quiz:
     num_questions = None  # To be defined in subclasses
 
@@ -8,8 +7,10 @@ class Quiz:
 
 
     def load_questions(self, filename):
-        with open(f"data/{filename}", 'r', encoding='utf-8') as questions_file:
-            lines = questions_file.readlines()
+        questions_file = open(f"data/{filename}", 'r', encoding='utf-8')
+        lines = questions_file.readlines()
+        questions_file.close()
+
 
         question_number = 1
         for line in lines:
@@ -61,14 +62,14 @@ class Quiz:
     
     def load_descriptions(self,filename):
         descriptions = {}
-        file = open(f"data/{filename}", 'r', encoding='utf-8')  # Open file traditionally
-        for line in file:
+        descriptions_file = open(f"data/{filename}", 'r', encoding='utf-8')  
+        for line in descriptions_file:
             line = line.strip()
             if not line or '=' not in line:
-                continue  # Skip empty or malformed lines
+                continue 
             trait, desc = line.split('=', 1)
             descriptions[trait.strip()] = desc.strip()
-        file.close()  # Manually close the file
+        descriptions_file.close()  
         self.descriptions = descriptions
         return descriptions
     
