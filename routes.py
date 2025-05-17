@@ -15,11 +15,14 @@ from app.validate_login_form import validate_login_fields,validate_user_exists,v
 app=Flask("routes")
 app.secret_key = "secret-key"
 
-users_json_file="data/users_data.json"
-quizzes_json_file="data/quizzes.json"
+users_json_file="data/json/users_data.json"
+quizzes_json_file="data/json/quizzes.json"
+trial_quiz_ques_file="data/text/trial_quiz_questions.txt"
+quiz_ques_file="data/text/quiz_questions.txt"
+pet_descriptions_file="data/text/pet_description.txt"
 
-trial_quiz = TrialQuiz('trial_quiz_questions.txt',"pet_description.txt")
-quiz=RegisteredUserQuiz(users_json_file,quizzes_json_file,'quiz_questions.txt',"pet_description.txt")
+trial_quiz = TrialQuiz(trial_quiz_ques_file,pet_descriptions_file)
+quiz=RegisteredUserQuiz(users_json_file,quizzes_json_file,quiz_ques_file,pet_descriptions_file)
 
 
 
@@ -143,7 +146,7 @@ def login():
         login_form = request.form 
         email = login_form.get('email', '').strip()
         password = login_form.get('password', '').strip()
-        users = load_json_file("data/users_data.json")
+        users = load_json_file(users_json_file)
 
         # 1. Validate empty fields (returns a dict of errors)
         field_errors = validate_login_fields(email, password)
