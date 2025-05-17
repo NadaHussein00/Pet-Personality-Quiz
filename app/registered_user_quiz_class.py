@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from app.quiz_class import Quiz
 from app.helpers import load_json_file,save_json_file
@@ -31,9 +30,6 @@ class RegisteredUserQuiz(Quiz):
 
 
     def calculate_scores(self, answers):
-        """
-        answers is a dict: { "q1": "cat", "q2": "mostly indoors, enjoying quiet and comfort", ... }
-        """
         trait_scores = {}
         for question in self.questions:
             qid = question["id"]
@@ -91,14 +87,15 @@ class RegisteredUserQuiz(Quiz):
     }
 
     def save_result(self, username, answers, trait_scores,submitted_at):
-        """
-        Save the quiz result with timestamp into the user's quiz history in the JSON file.
-        """
-        # Load users
+
         users=load_json_file(self.users_file)
 
         # Find user
-        user = next((u for u in users if u['username'].lower() == username.lower()), None)
+        user = None
+        for u in users:
+            if u['username'].lower() == username.lower():
+                user = u
+                break
         if not user:
             raise ValueError("User not found")
 
@@ -136,7 +133,12 @@ class RegisteredUserQuiz(Quiz):
 
     # 3. Update user's quiz history with new final result
         users = load_json_file(self.users_file)
-        user = next((u for u in users if u['username'].lower() == username.lower()), None)
+        user = None
+        # Find user with nested loop instead of next()
+        for u in users:
+            if u['username'].lower() == username.lower():
+                user = u
+                break
         if not user:
             raise ValueError("User not found")
 
