@@ -1,0 +1,49 @@
+[
+  {
+    "username": "markkk123",
+    "email": "mark.andrew@example.com",
+    "first_name": "Mark",
+    "last_name": "Andrew",
+    "gender": "Male",
+    "password": "5006107307307706f0720640310320400",
+    "bio": "",
+    "registered_at": "2025-05-16T16:45:35.513393+00:00",
+    "quiz_history": [
+      {
+        "pet_type": "Duck",
+        "dominant_trait": "Independent",
+        "description": "Your pet values its independence and enjoys spending time on its own. It is confident and self-reliant, comfortable exploring without constant attention. This autonomy reflects a strong and capable personality.\n\nAdditional gender-related traits:\n- Nurturing: Your pet has a caring and attentive nature, always looking out for others.\n- Attentive: Your pet notices the little things and are very mindful in her actions.\n",
+        "submitted_at": "2025-05-16T16:46:13.068150Z",
+        "is_modified": false,
+        "modified_at": null
+      },
+      {
+        "pet_type": "Dog",
+        "dominant_trait": "Active",
+        "description": "Your pet is energetic and loves to stay active throughout the day. It thrives on playtime and outdoor adventures, always eager to explore. This lively spirit keeps your pet engaged and joyful.\n\nAdditional gender-related traits:\n- Nurturing: Your pet has a caring and attentive nature, always looking out for others.\n- Attentive: Your pet notices the little things and are very mindful in her actions.\n",
+        "submitted_at": "2025-05-16T21:43:39.414762Z",
+        "is_modified": true,
+        "modified_at": "2025-05-16T21:47:44.060419Z"
+      },
+      {
+        "pet_type": "Rabbit",
+        "dominant_trait": "Calm",
+        "description": "Your pet is calm and relaxed, bringing a peaceful presence wherever it goes. It handles stressful situations gracefully and enjoys quiet moments. This tranquility makes your pet a comforting companion.\n\nAdditional gender-related traits:\n- Nurturing: Your pet has a caring and attentive nature, always looking out for others.\n- Attentive: Your pet notices the little things and are very mindful in her actions.\n",
+        "submitted_at": "2025-05-17T16:59:29.327178Z",
+        "is_modified": false,
+        "modified_at": null
+      }
+    ]
+  },
+  {
+    "username": "john__doe",
+    "email": "john.doe@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "gender": "Male",
+    "password": "5006107307307706f0720640310320400",
+    "bio": "This is John! A HUGE cattos lover!",
+    "registered_at": "2025-05-17T17:55:03.237297+00:00",
+    "quiz_history": []
+  }
+]
