@@ -5,11 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     popup.style.display = "block";
     setTimeout(function () {
       popup.style.display = "none";
-      // Optionally remove the query param from URL (for aesthetics)
-      /*         if (window.history.replaceState) {
-          const url = window.location.origin + window.location.pathname;
-          window.history.replaceState({}, document.title, url);
-        } */
     }, 2000);
   }
 });
