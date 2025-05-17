@@ -92,6 +92,10 @@ h1 {
   width: 20%;
 }
 
+#delete-quiz-modal #confirm-delete-btn {
+  background-color: red;
+}
+
 .nav-btn:hover,
 .trial-note-button-group button:hover,
 #submit-trial-quiz button:hover,
