@@ -1,20 +1,4 @@
-
 import json
-
-""" def get_users():
-    try:
-        users_file = open("data/users_data.json")
-        users = json.load(users_file)
-        users_file.close()
-        return users
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []                  
-
-def save_users(users):
-    users_file = open("data/users_data.json", "w") 
-    json.dump(users, users_file, indent=2)  
-    users_file.close() 
-	 """
 
 def load_json_file(filepath):
     try:
