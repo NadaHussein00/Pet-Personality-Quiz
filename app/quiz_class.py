@@ -1,5 +1,12 @@
+import json
+
+traits_emojis_file = open("data/json/trait_emojis.json", "r", encoding="utf-8")
+trait_emojis = json.load(traits_emojis_file)
+traits_emojis_file.close()
+
 class Quiz:
     num_questions = None  # To be defined in subclasses
+    trait_emojis = trait_emojis
 
     def __init__(self):
         self.questions = []
