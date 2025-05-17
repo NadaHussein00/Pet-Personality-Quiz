@@ -57,6 +57,8 @@ class RegisteredUserQuiz(Quiz):
         top_trait = max(trait_scores, key=trait_scores.get)
         description = self.get_description(top_trait)
         pet_type = answers.get("q1")
+        emoji = self.trait_emojis.get(top_trait)
+        
         gender_desc = ""
         if answers:
             gender_answer = answers.get("q2")  # or correct key
@@ -79,7 +81,7 @@ class RegisteredUserQuiz(Quiz):
         full_description = f"{description}{gender_desc}"
         return {
         "pet_type": pet_type.capitalize() if pet_type else "",
-        "dominant_trait": top_trait.capitalize(),
+        "dominant_trait": f"{emoji} {top_trait.capitalize()}",
         "description": full_description,
         "submitted_at": submitted_at,
         "is_modified":False,
