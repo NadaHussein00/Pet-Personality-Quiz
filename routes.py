@@ -1,6 +1,5 @@
-
 from flask import Flask, request, redirect, url_for,jsonify,session, make_response
-from urllib.parse import quote,unquote
+from urllib.parse import quote,unquote,urlencode
 import datetime
 import html
 import json
@@ -34,7 +33,6 @@ def homepage():
 @app.route("/signup", methods=["GET", "POST"])
 def signupPage():
     if request.method == "POST":
-        print("POST received at /test-post")
         signup_form = request.form 
         errors = {}
 
@@ -90,7 +88,6 @@ def signupPage():
                     errors["email"] = "Email already exists."
 
         if errors:
-           print("Returning errors to user")
            signup_html = get_html("signupPage")
            signup_html = signup_html.replace("$$ERROR_EMAIL$$", errors.get("email", ""))
            signup_html = signup_html.replace("$$ERROR_USERNAME$$", errors.get("username", ""))
@@ -107,7 +104,7 @@ def signupPage():
            return signup_html
 
         # If not found, add new user
-        print("No errors, proceeding to append user")
+
         users.append({
             "username": username,
             "email": email,
@@ -120,10 +117,7 @@ def signupPage():
             "quiz_history": []  # list to store past quiz attempts
         })
         save_json_file(users_json_file,users)
-        print("Users saved after append")
-        #return {"success": True, "message": "Registration successful!"}
-        return '<script>window.location.href="/login?registered=1";</script>'
-        #return redirect(url_for('login', registered=1))
+        return redirect(url_for('login', registered=1))
 
     # For GET requests, serve the HTML page
     signup_html = get_html("signup_page")
@@ -206,28 +200,27 @@ def trial_quiz_page():
 
         # Process answers
         scores = trial_quiz.calculate_scores(answers)
-        final_result = trial_quiz.get_final_result(scores)
+        final_result = trial_quiz.get_final_result(scores,answers)
 
         # Store result in session
-        encoded_result = quote(final_result)
+        encoded_result = urlencode(final_result)
 
         # Redirect to result page with result in URL
-        return redirect(url_for('quiz_result', result=encoded_result))
+        return redirect(url_for('quiz_result')+ '?' +encoded_result+ '&username=guest')
 
     # For GET requests, serve the static quiz page
     return get_html("trial_quiz_page") #your static quiz HTML loader
-
 @app.route("/quiz_result")
 def quiz_result():
     encoded_result = request.args.get('result', 'No result found.')
-    print(f"Raw encoded_result from URL: {encoded_result!r}")
+    username = request.args.get('username', None)  # Optional username from URL
 
-    username = request.args.get('username', None)  # Username from URL
-
+    # Default guest values
     first_name = "Guest"
     is_guest = True
     user = None
 
+    # Try to find user if username provided
     if username:
         users = load_json_file(users_json_file)
         for u in users:
@@ -237,42 +230,45 @@ def quiz_result():
                 is_guest = False
                 break
 
-    if not user:
-        # No user found, so no quiz history
-        return "No quiz results found", 404
+    # Prepare variables for rendering
+    if user is None:
+        # Guest user or username not found
+        # Extract quiz result directly from URL parameters
+        dominant_trait = request.args.get('dominant_trait', 'Unknown')
+        description = request.args.get('description', '')
+        pet_type = request.args.get('pet_type', 'Unknown')
+    else:
+        # Registered user with quiz history
+        quiz_history = user.get("quiz_history", [])
+        if not quiz_history:
+            return "No quiz results found", 404
 
-    quiz_history = user.get("quiz_history", [])
-    if not quiz_history:
-        return "No quiz results found", 404
+        latest_quiz = quiz_history[-1]
+        dominant_trait = latest_quiz.get("dominant_trait", "Unknown")
+        description = latest_quiz.get("description", "")
+        pet_type = latest_quiz.get("pet_type", "Unknown")
 
-
-    # URL-decode the result text
-    result = unquote(encoded_result)
-    latest_quiz = quiz_history[-1]
-
-    # Extract raw data
-    pet_type = latest_quiz.get("pet_type", "Unknown")
-    dominant_trait = latest_quiz.get("dominant_trait", "Unknown")
-    description = latest_quiz.get("description", "")
-
-
+    # Escape all for safe HTML output
     safe_first_name = html.escape(first_name)
     pet_type_safe = html.escape(pet_type)
     dominant_trait_safe = html.escape(dominant_trait)
     description_safe = html.escape(description).replace('\n', '<br>')
 
+    # Choose button based on guest or registered user
     if is_guest:
         button_html = '''
         <a href="/signup">
           <button id="sign-up-btn" class="nav-btn">Sign Up Now!</button>
         </a>
         '''
+        safe_username = ""
     else:
         button_html = f'''
         <a href="/profile/{username}">
           <button id="profile-btn" class="nav-btn">Go Back to Profile</button>
         </a>
         '''
+        safe_username = username
 
     # Load your static HTML template
     html_content = get_html("quiz_result_page")
@@ -280,9 +276,8 @@ def quiz_result():
     html_content = html_content.replace('$$PET_TYPE$$', pet_type_safe)
     html_content = html_content.replace('$$DOMINANT_TRAIT$$', dominant_trait_safe)
     html_content = html_content.replace('$$DESCRIPTION$$', description_safe)
-    """ html_content = html_content.replace('$$RESULT$$', result) """
     html_content = html_content.replace('$$FIRSTNAME$$', safe_first_name)
-    html_content = html_content.replace('$$USERNAME$$', username)
+    html_content = html_content.replace('$$USERNAME$$', safe_username)
     html_content = html_content.replace('$$BUTTON$$', button_html)
 
     return html_content
@@ -329,10 +324,6 @@ def get_user_profile(username):
     return response
 
 
-
-    #return html_content
-    #return get_html("userProfile")
-	
 
 @app.route("/quiz",methods=["GET","POST"])    
 def quiz_page():
@@ -381,11 +372,6 @@ def quiz_page():
         # Store result in session
         quiz_result_html = quiz.get_final_result(scores, answers,submitted_at)
 
-        # Encode HTML string for URL
-        #encoded_result = quote(quiz_result_html)
-
-        # Redirect to result page with result in URL
-        #return redirect(url_for('quiz_result', result=encoded_result,username=username))
         return redirect(url_for('quiz_result', username=username))
 
     # GET request: render quiz page
@@ -590,7 +576,7 @@ def delete_quiz():
     if len(new_quiz_history) == original_len:
         return jsonify({"error": "Quiz not found"}), 404        
 
-# Assign the filtered list back to user's quiz_history
+
     user["quiz_history"] = new_quiz_history
 
     save_json_file(users_json_file,users)
@@ -603,5 +589,5 @@ def delete_quiz():
 	
 @app.route("/logout")
 def logout():
-    session.clear()  # Clears all data in the session, effectively logging out the user
+    session.clear()  
     return redirect(url_for("login"))
