@@ -32,15 +32,11 @@ class TrialQuiz(Quiz):
         top_trait = max(trait_scores, key=trait_scores.get)
         description = self.get_description(top_trait)
         pet_type = answers.get("q1")
+        emoji = self.trait_emojis.get(top_trait)
+
         return {
-            "dominant_trait": top_trait.capitalize(),
+            "dominant_trait": f"{emoji} {top_trait.capitalize()}",
             "description": description,
             "pet_type":pet_type.capitalize()
         }
-
-
-        description = self.get_description(top_trait)
-        #return f"Dominant trait: {top_trait.capitalize()}\n\n{description}"
-        #return f"Dominant trait: {top_trait.capitalize()}<br><br>{description}"
-        return f"<h3>Dominant trait: {top_trait.capitalize()}</h3><p>{description}</p>"
 
