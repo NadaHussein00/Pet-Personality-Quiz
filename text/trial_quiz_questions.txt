@@ -1,6 +1,0 @@
-Choose your pet.;cat;dog
-Does your pet prefer spending time indoors or outdoors?;indoors:calm=2;outdoors:active=3
-Is your pet more active in the morning or at night?;morning:energetic=3;night:independent=2
-Does your pet enjoy social gatherings with other animals?;yes:social=3;no:reserved=2
-How does your pet handle stressful situations?;stays calm:calm=3;gets anxious:sensitive=2
-Does your pet prefer routine or spontaneity?;routine:organized=3;spontaneity:adventurous=2
