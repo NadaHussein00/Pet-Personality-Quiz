@@ -7,7 +7,7 @@ class Quiz:
 
 
     def load_questions(self, filename):
-        questions_file = open(f"data/{filename}", 'r', encoding='utf-8')
+        questions_file = open(f"data/text/{filename}", 'r', encoding='utf-8')
         lines = questions_file.readlines()
         questions_file.close()
 
@@ -62,7 +62,7 @@ class Quiz:
     
     def load_descriptions(self,filename):
         descriptions = {}
-        descriptions_file = open(f"data/{filename}", 'r', encoding='utf-8')  
+        descriptions_file = open(f"data/text/{filename}", 'r', encoding='utf-8')  
         for line in descriptions_file:
             line = line.strip()
             if not line or '=' not in line:
