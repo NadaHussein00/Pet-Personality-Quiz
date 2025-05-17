@@ -1,0 +1,62 @@
+[
+  {
+    "username": "markkk123",
+    "submitted_at": "2025-05-16T16:46:13.068150Z",
+    "answers": {
+      "q1": "duck",
+      "q2": "female",
+      "q3": "indoors but curious and playful",
+      "q4": "night",
+      "q5": "curious",
+      "q6": "indifferent",
+      "q7": "with other\r\n          pets",
+      "q8": "explores",
+      "q9": "destructive",
+      "q10": "no routine",
+      "q11": "quiet",
+      "q12": "stubborn"
+    },
+    "is_modified": false,
+    "modified_at": null
+  },
+  {
+    "username": "markkk123",
+    "submitted_at": "2025-05-16T21:43:39.414762Z",
+    "answers": {
+      "q1": "hamster",
+      "q2": "female",
+      "q3": "mostly outdoors, exploring and energetic",
+      "q4": "afternoon",
+      "q5": "reserved",
+      "q6": "alert",
+      "q7": "owner",
+      "q8": "cautious",
+      "q9": "destructive",
+      "q10": "some variation",
+      "q11": "quiet",
+      "q12": "playful"
+    },
+    "is_modified": false,
+    "modified_at": null
+  },
+  {
+    "username": "markkk123",
+    "submitted_at": "2025-05-17T16:59:29.327178Z",
+    "answers": {
+      "q1": "rabbit",
+      "q2": "female",
+      "q3": "mostly indoors, enjoying quiet and comfort",
+      "q4": "night",
+      "q5": "social",
+      "q6": "indifferent",
+      "q7": "with other pets",
+      "q8": "comfortable",
+      "q9": "relaxed",
+      "q10": "some variation",
+      "q11": "body language",
+      "q12": "playful"
+    },
+    "is_modified": false,
+    "modified_at": null
+  }
+]
