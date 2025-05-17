@@ -61,14 +61,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error(err);
     // Optionally show an error message to user
   }
-  console.log(document.getElementById("edit-profile-form"));
+
   // Handle form submission to PATCH update profile
   document
     .getElementById("edit-profile-form")
     .addEventListener("submit", async (e) => {
-      console.log("Form submit event fired");
       e.preventDefault();
-      console.log("Form submit handler triggered");
 
       clearErrors(); // Clear previous validation errors (implement or import this)
 
@@ -92,7 +90,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         "confirm-password": "error-confirm-password-edit",
       };
 
-      console.log("Running validation...");
       // Call generic validation runner
       const isValid = validateForm(
         updatedData,
@@ -102,7 +99,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         showError // pass your showError function to display errors
       );
 
-      console.log("Validation result:", isValid);
       if (!isValid) {
         // Validation failed, do not submit
         return;
