@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
   const closeDeleteModalBtn = document.getElementById("close-delete-modal-btn");
 
-  /*     console.log({ modal, cancelDeleteBtn, confirmDeleteBtn }); */
-
   let quizHistory = [];
   let quizCardToDelete = null;
   let deleteUrl = "";
@@ -55,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
     viewFullResultBtn.innerText = "View Full Result";
     modifyAnswersBtn.innerText = "Modify your answers";
 
+    deleteQuizHistoryBtn.style.backgroundColor = "red";
+
     // Format date nicely (optional)
     const date = new Date(quiz.submitted_at);
     const formattedDate = date.toLocaleDateString(undefined, {
@@ -68,6 +68,23 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="quiz-pet-type"><strong>Pet Type:</strong> <span class="highlight">${quiz.pet_type}</span></div>
       <div class="quiz-dominant-trait"><strong>Dominant Trait:</strong> <span class="highlight">${quiz.dominant_trait}</span></div>
     `;
+
+    card.appendChild(viewFullResultBtn);
+    viewFullResultBtn.addEventListener("click", () => {
+      /* const username = quizHistory.username; */
+      const quizId = encodeURIComponent(quiz.submitted_at);
+      window.location.href = `/quiz_result?username=${encodeURIComponent(
+        username
+      )}&quiz_id=${quizId}`;
+    });
+
+    card.appendChild(modifyAnswersBtn);
+    modifyAnswersBtn.addEventListener("click", () => {
+      const url = `/quiz?username=${encodeURIComponent(
+        username
+      )}&submitted_at=${encodeURIComponent(quiz.submitted_at)}`;
+      window.location.href = url;
+    });
 
     card.appendChild(deleteQuizHistoryBtn);
     deleteQuizHistoryBtn.addEventListener("click", () => {
@@ -93,23 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (event.target === delteQuizModal) {
         delteQuizModal.style.display = "none"; // Close the modal
       }
-    });
-
-    card.appendChild(viewFullResultBtn);
-    viewFullResultBtn.addEventListener("click", () => {
-      /* const username = quizHistory.username; */
-      const quizId = encodeURIComponent(quiz.submitted_at);
-      window.location.href = `/quiz_result?username=${encodeURIComponent(
-        username
-      )}&quiz_id=${quizId}`;
-    });
-
-    card.appendChild(modifyAnswersBtn);
-    modifyAnswersBtn.addEventListener("click", () => {
-      const url = `/quiz?username=${encodeURIComponent(
-        username
-      )}&submitted_at=${encodeURIComponent(quiz.submitted_at)}`;
-      window.location.href = url;
     });
 
     if (quiz.is_modified) {
