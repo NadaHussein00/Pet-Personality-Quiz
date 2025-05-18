@@ -290,6 +290,10 @@ def quiz_result():
 def get_user_profile(username):
     if 'username' not in session:
         return redirect(url_for('login'))
+    
+    if session['username'].lower() != username.lower():
+        # Optionally, redirect to their own profile, or show 403 Forbidden
+        return redirect(url_for('login'))
     users = load_json_file(users_json_file)
 
     user = None
