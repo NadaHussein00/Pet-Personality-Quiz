@@ -1,13 +1,55 @@
 [
   {
+    "username": "martin.jacoub",
+    "email": "martin.jacoub@gmail.com",
+    "first_name": "Martin",
+    "last_name": "Jacoub",
+    "gender": "Male",
+    "password": "8097115115119111114100495064",
+    "bio": "",
+    "registered_at": "2025-05-19T08:45:35.046123+00:00",
+    "quiz_history": []
+  },
+  {
+    "username": "james_doe",
+    "email": "james.doe@example.com",
+    "first_name": "James",
+    "last_name": "Doe",
+    "gender": "Male",
+    "password": "4605940014111119115115117908",
+    "bio": "I'm a huge pets lover!",
+    "registered_at": "2025-05-19T09:02:05.571748+00:00",
+    "quiz_history": [
+      {
+        "pet_type": "Dog",
+        "dominant_trait": "\ud83d\udc3e Social",
+        "description": "Your pet loves social interactions and thrives in the company of others. It is friendly, outgoing, and enjoys making new friends. This sociable nature makes your pet a beloved member of any group.<h3>Additional gender-related traits:</h3><ul><li><strong>Nurturing:</strong> Your pet has a caring and attentive nature, always looking out for others.</li><li><strong>Attentive:</strong> Your pet notices the little things and are very mindful in her actions.</li></ul>",
+        "submitted_at": "2025-05-19T09:09:33.769748Z",
+        "is_modified": true,
+        "modified_at": "2025-05-19T11:55:15.599409Z"
+      }
+    ]
+  },
+  {
     "username": "johndoe__",
     "email": "john.doe@example.com",
     "first_name": "John",
     "last_name": "Doe",
     "gender": "Male",
-    "password": "8097115115119111114100495034",
+    "password": "4605940014111119115115117908",
     "bio": "",
-    "registered_at": "2025-05-18T07:31:21.853983+00:00",
+    "registered_at": "2025-05-19T09:38:13.306696+00:00",
+    "quiz_history": []
+  },
+  {
+    "username": "janedoe111",
+    "email": "jane.doe@example.com",
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "gender": "Female",
+    "password": "5305940014111119115115117908",
+    "bio": "I love pets so much",
+    "registered_at": "2025-05-19T09:39:09.949356+00:00",
     "quiz_history": []
   }
 ]
