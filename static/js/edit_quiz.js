@@ -1,84 +1,88 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // Extract username and submitted_at from URL query params
-  const urlParams = new URLSearchParams(window.location.search);
-  const username = urlParams.get("username");
-  const submittedAt = urlParams.get("submitted_at");
-
-  if (!username || !submittedAt) {
-    // Not on quiz edit page, do nothing!
-    return;
-  }
-
-  try {
-    // Fetch saved answers from backend GET endpoint
-    const response = await fetch(
-      `/edit_quiz?username=${encodeURIComponent(
-        username
-      )}&submitted_at=${encodeURIComponent(submittedAt)}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to load saved answers");
+    const messageDiv = document.getElementById("message");
+  
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get("username");
+    const submittedAt = urlParams.get("submitted_at");
+  
+    if (!username || !submittedAt) {
+      return;
     }
-
-    const data = await response.json();
-    const savedAnswers = data.answers || {};
-
-    // Pre-fill the form inputs with saved answers
-    for (const [questionName, answerValue] of Object.entries(savedAnswers)) {
-      const inputs = document.querySelectorAll(`input[name="${questionName}"]`);
-      console.log(savedAnswers);
-      inputs.forEach((input) => {
-        if (input.value === answerValue) {
-          input.checked = true;
-        }
-      });
-    }
-  } catch (error) {
-    console.error("Error loading saved answers:", error);
-  }
-
-  // Handle form submission with PATCH request
-  const form = document.querySelector("form");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const updatedAnswers = {};
-    for (const [key, value] of formData.entries()) {
-      updatedAnswers[key] = value;
-    }
-
+  
     try {
       const response = await fetch(
-        `/edit_quiz?username=${encodeURIComponent(
-          username
-        )}&submitted_at=${encodeURIComponent(submittedAt)}`,
+        `/petsona/edit_quiz?username=${encodeURIComponent(username)}&submitted_at=${encodeURIComponent(submittedAt)}`,
         {
-          method: "PATCH",
+          method: "GET",
           headers: {
-            "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify(updatedAnswers),
         }
       );
-
-      const result = await response.json();
-
-      if (result.redirect_url) {
-        // Redirect to the result card page
-        window.location.href = result.redirect_url;
+  
+      if (!response.ok) {
+        messageDiv.className = "";
+        messageDiv.classList.add("error");
+        messageDiv.textContent = "Failed to load saved answers. Please try again later.";
+        messageDiv.style.display = "block";
+        return;
       }
-    } catch (err) {
-      alert("Failed to update quiz.");
-      console.error(err);
+  
+      const data = await response.json();
+      const savedAnswers = data.answers || {};
+  
+      for (const [questionName, answerValue] of Object.entries(savedAnswers)) {
+        const inputs = document.querySelectorAll(`input[name="${questionName}"]`);
+        inputs.forEach((input) => {
+          if (input.value === answerValue) {
+            input.checked = true;
+          }
+        });
+      }
+    } catch {
+      // Handle network or unexpected errors 
+      messageDiv.className = "";
+      messageDiv.classList.add("error");
+      messageDiv.textContent = "An error occurred while loading saved answers. Please check your connection.";
+      messageDiv.style.display = "block";
     }
+  
+    const form = document.querySelector("#edit-quiz-form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData(form);
+      const updatedAnswers = {};
+      for (const [key, value] of formData.entries()) {
+        updatedAnswers[key] = value;
+      }
+  
+      try {
+        const response = await fetch(
+          `/petsona/edit_quiz?username=${encodeURIComponent(username)}&submitted_at=${encodeURIComponent(submittedAt)}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(updatedAnswers),
+          }
+        );
+  
+        const result = await response.json();
+  
+        if (result.redirect_url) {
+          window.location.href = result.redirect_url;
+        } 
+
+      } catch {
+        // Show error message 
+        messageDiv.className = "";
+        messageDiv.classList.add("error");
+        messageDiv.textContent = "Failed to update quiz. Please check your connection and try again.";
+        messageDiv.style.display = "block";
+      }
+    });
   });
-});
+  
