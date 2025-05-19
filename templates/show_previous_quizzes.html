@@ -3,10 +3,12 @@
   <head>
     <title>$$FIRSTNAME$$'s Quiz History</title>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="quiz-history-content">
-      <a id="go-back-to-profile-btn" href="/profile/$$USERNAME$$"
+      <div id="message" ></div>
+      <a id="go-back-to-profile-btn" href="/petsona/profile/$$USERNAME$$"
         >Go Back to Profile</a
       >
       <h1>Your Quiz History, $$FIRSTNAME$$!</h1>
@@ -38,7 +40,7 @@
         </div>
       </div>
     </div>
-    <script src="static/js/show_quizzes_history.js"></script>
-    <script src="static/js/edit_quiz.js"></script>
+    <script src="/static/js/show_quizzes_history.js"></script>
+    <script src="/static/js/edit_quiz.js"></script>
   </body>
 </html>
