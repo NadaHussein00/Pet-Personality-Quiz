@@ -3,24 +3,31 @@
   <head>
     <title>Pet Personality Test</title>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="home-page-content">
-      <h1>Welcome To The Pet Personality Quiz!</h1>
+      <h1>
+        🐾 PETSONA 🐾
+      </h1>
+      <h2>Discover your pet's unique persona!</h2>
+      <p>Whether they purr, chirp, quack, or squeak, every pet has a distinct persona. 
+        Discover what makes your companion truly one of a kind with this fun and insightful quiz!</p>
 
       <div id="user-choice">
         <div id="sign-up">
           <div id="signup-paragraph">
-            You can sign up to do the quizes and create a profile for your pet!
+            You can sign up to do unlimited quizzes!
           </div>
-          <a href="/signup">
-            <button id="sign-up-btn" class="nav-btn">Sign Up Now!</button>
-          </a>
+          
+            <a id="sign-up-btn" class="nav-btn" href="/petsona/signup">Sign Up Now!</a>
+         
         </div>
 
         <div id="trial-quiz">
           <p>You can have a trial quiz!</p>
-          <a id="trial-quiz-btn"> Try Your First Quiz Now! </a>
+          <a id="trial-quiz-btn"> Try It Out Now! </a>
         </div>
       </div>
       <div id="trial-quiz-note-modal" class="modal">
@@ -39,16 +46,16 @@
             up!
           </p>
           <div>
-            <a href="/signup" id="signup-trial-note">Sign Up</a>
-            <a href="/trial_quiz" id="goto-trial-quiz"> Go to Trial Quiz </a>
+            <a href="/petsona/signup" id="signup-trial-note">Sign Up</a>
+            <a href="/petsona/quiz" id="goto-trial-quiz"> Go to Trial Quiz </a>
           </div>
         </div>
       </div>
       <div id="loggedin-user">
         <div id="signup-paragraph">Do you have an account already?</div>
-        <a href="/login" id="login-choice-btn">Login Now! </a>
+        <a href="/petsona/login" id="login-choice-btn">Login Now! </a>
       </div>
     </div>
-    <script src="static/js/index.js"></script>
+    <script src="/static/js/index.js"></script>
   </body>
 </html>
