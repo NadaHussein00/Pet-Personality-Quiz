@@ -96,5 +96,6 @@ and doesn't contain unused or experimental code.
 `console.log()` for any information the app user should see. 
 Instead, all user feedback needs to be visible in the 
 browser. 
+
 ✅ All exercises have been completed as per the 
 requirements and pushed to the respective GitHub repository.
