@@ -1,4 +1,3 @@
-
 nurturing=Your pet has a caring and attentive nature, always looking out for others.
 attentive=Your pet notices the little things and are very mindful in her actions.
 protective=Your pet is loyal and stands strong to protect those he cares about.
