@@ -18,5 +18,25 @@
     },
     "is_modified": true,
     "modified_at": "2025-05-19T11:55:15.599409Z"
+  },
+  {
+    "username": "johndoe__",
+    "submitted_at": "2025-05-19T14:15:29.864438Z",
+    "answers": {
+      "q1": "hamster",
+      "q2": "female",
+      "q3": "indoors but curious and playful",
+      "q4": "evening",
+      "q5": "shy",
+      "q6": "alert",
+      "q7": "with other pets",
+      "q8": "explores",
+      "q9": "quiet",
+      "q10": "depends on mood",
+      "q11": "quiet",
+      "q12": "playful"
+    },
+    "is_modified": false,
+    "modified_at": null
   }
 ]
