@@ -4,22 +4,24 @@ document.addEventListener("DOMContentLoaded", function () {
   const firstName = profileEl.getAttribute("data-firstname");
   const quizHistoryJson = profileEl.getAttribute("data-quiz-history");
   const greetingEl = document.getElementById("greeting");
+  const messageDiv = document.getElementById("message");
 
-  // Helper to safely add event listener if element exists
-  function addEventListenerSafe(id, event, handler) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.style.display = "inline-block"; // Show button when attaching listener
-      el.addEventListener(event, handler);
-    }
-  }
 
-  // Parse quiz history JSON safely
+  const logoutBtn = document.getElementById("logout-btn");
+  const editProfileBtn = document.getElementById("edit-profile-btn");
+  const firstQuizBtn = document.getElementById("first-quiz-btn");
+  const anotherQuizBtn = document.getElementById("another-quiz-btn");
+  const viewQuizzesBtn = document.getElementById("view-quizzes-btn");
+
+
   let quizHistory = [];
   try {
     quizHistory = JSON.parse(quizHistoryJson);
   } catch (e) {
-    console.error("Invalid quiz history JSON", e);
+    messageDiv.className = "";
+    messageDiv.classList.add("error");
+    messageDiv.textContent = "Failed to load quiz history data.";
+    messageDiv.style.display = "block";
   }
 
   const localStorageKey = username + " hasLoggedInBefore";
@@ -40,28 +42,40 @@ document.addEventListener("DOMContentLoaded", function () {
     sessionStorage.setItem(sessionStorageKey, "true");
   }
 
-  addEventListenerSafe("logout-btn", "click", function () {
+  
+  logoutBtn.addEventListener("click", () => {
     localStorage.removeItem(localStorageKey);
     sessionStorage.removeItem(sessionStorageKey);
-    window.location.href = "/login";
+    window.location.href = "/petsona/login";
   });
 
-  addEventListenerSafe("edit-profile-btn", "click", function () {
+  editProfileBtn.addEventListener("click", () => {
     window.location.href =
-      "/edit_profile?username=" + encodeURIComponent(username);
+      "/petsona/edit_profile?username=" + encodeURIComponent(username);
   });
 
+  firstQuizBtn.addEventListener("click", () => {
+    window.location.href = "/petsona/quiz?username=" + encodeURIComponent(username);
+  });
+
+  anotherQuizBtn.addEventListener("click", () => {
+    window.location.href = "/petsona/quiz?username=" + encodeURIComponent(username);
+  });
+
+  viewQuizzesBtn.addEventListener("click", () => {
+    window.location.href =
+      "/petsona/quiz_history?username=" + encodeURIComponent(username);
+  });  
+  
+  
+  // Show/hide quiz buttons based on quiz history length
   if (quizHistory.length === 0) {
-    addEventListenerSafe("first-quiz-btn", "click", () => {
-      window.location.href = "/quiz?username=" + encodeURIComponent(username);
-    });
+    firstQuizBtn.style.display = "inline-block";
+    anotherQuizBtn.style.display = "none";
+    viewQuizzesBtn.style.display = "none";
   } else {
-    addEventListenerSafe("another-quiz-btn", "click", () => {
-      window.location.href = "/quiz?username=" + encodeURIComponent(username);
-    });
-    addEventListenerSafe("view-quizzes-btn", "click", () => {
-      window.location.href =
-        "/quiz_history?username=" + encodeURIComponent(username);
-    });
+    firstQuizBtn.style.display = "none";
+    anotherQuizBtn.style.display = "inline-block";
+    viewQuizzesBtn.style.display = "inline-block";
   }
 });
