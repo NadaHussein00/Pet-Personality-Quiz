@@ -3,11 +3,11 @@ from urllib.parse import urlencode
 import datetime
 import html
 import json
-from app.helpers import get_html,load_json_file,save_json_file,hash_password
-from app.trial_quiz_class import TrialQuiz
-from app.registered_user_quiz_class import RegisteredUserQuiz
-from app.validate_signup_form import validate_name,validate_email,validate_username,validate_password
-from app.validate_login_form import validate_login_fields,validate_user_exists,validate_password_login
+from app.utils.helpers import get_html,load_json_file,save_json_file,hash_password,generate_quiz_form_html
+from app.models.trial_quiz_class import TrialQuiz
+from app.models.registered_user_quiz_class import RegisteredUserQuiz
+from app.utils.validate_signup_form import validate_name,validate_email,validate_username,validate_password
+from app.utils.validate_login_form import validate_login_fields,validate_user_exists,validate_password_login
 
 
 
@@ -27,13 +27,16 @@ quiz=RegisteredUserQuiz(users_json_file,quizzes_json_file,quiz_ques_file,pet_des
 
 
 
+# Home page route: redirects to user profile if logged in, otherwise shows landing page
 @app.route("/")
 def homepage():
     if "username" in session:
         return redirect(url_for("get_user_profile", username=session["username"]))
     return get_html("index")
 
-@app.route("/signup", methods=["GET", "POST"])
+
+# Signup page: handles user registration via GET and POST methods
+@app.route("/petsona/signup", methods=["GET", "POST"])
 def signupPage():
     if request.method == "POST":
         signup_form = request.form 
@@ -50,7 +53,7 @@ def signupPage():
 
         users = load_json_file(users_json_file)
 
-        # Validation
+
         first_name_error = validate_name(firstname, "First name")
         last_name_error = validate_name(lastname, "Last name")
         email_error = validate_email(email)
@@ -82,7 +85,7 @@ def signupPage():
         if bio_error:
             errors["bio"] = bio_error               
 
-        # Only check for existing username/email if no other errors
+        
         if not errors:
             for user in users:
                 if user['username'].lower() == username.lower():
@@ -91,23 +94,17 @@ def signupPage():
                     errors["email"] = "Email already exists."
 
         if errors:
-           signup_html = get_html("signupPage")
-           signup_html = signup_html.replace("$$ERROR_EMAIL$$", errors.get("email", ""))
-           signup_html = signup_html.replace("$$ERROR_USERNAME$$", errors.get("username", ""))
-           signup_html = signup_html.replace("$$ERROR_FIRSTNAME$$", errors.get("firstname", ""))
-           signup_html =signup_html.replace("$$ERROR_LASTNAME$$", errors.get("lastname", ""))
-           signup_html = signup_html.replace("$$ERROR_BIO$$", errors.get("bio", ""))
+            signup_html = get_html("signup_page")
+            signup_html = signup_html.replace("$$ERROR_EMAIL$$", errors.get("email", ""))
+            signup_html = signup_html.replace("$$ERROR_USERNAME$$", errors.get("username", ""))
+            signup_html = signup_html.replace("$$FIRSTNAME$$", firstname)
+            signup_html = signup_html.replace("$$LASTNAME$$", lastname)
+            signup_html = signup_html.replace("$$EMAIL$$", email)
+            signup_html = signup_html.replace("$$USERNAME$$", username)
+            signup_html = signup_html.replace("$$BIO$$", bio)
+            return signup_html
 
-           signup_html = signup_html.replace("$$EMAIL$$", email)
-           signup_html = signup_html.replace("$$USERNAME$$", username)
-           signup_html = signup_html.replace("$$FIRSTNAME$$", firstname)
-           signup_html = signup_html.replace("$$LASTNAME$$", lastname)
-           signup_html = signup_html.replace("$$BIO$$", bio)
-
-           return signup_html
-
-        # If not found, add new user
-
+        
         users.append({
             "username": username,
             "email": email,
@@ -116,20 +113,16 @@ def signupPage():
             "gender":gender,
             "password": hash_password(password),
             "bio":bio,
-            "registered_at":datetime.datetime.now(datetime.timezone.utc).isoformat(),  # store registration time in UTC
-            "quiz_history": []  # list to store past quiz attempts
+            "registered_at":datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "quiz_history": []
         })
         save_json_file(users_json_file,users)
         return redirect(url_for('login', registered=1))
 
-    # For GET requests, serve the HTML page
+    
     signup_html = get_html("signup_page")
     signup_html = signup_html.replace("$$ERROR_EMAIL$$", "")
     signup_html = signup_html.replace("$$ERROR_USERNAME$$", "")
-    signup_html = signup_html.replace("$$ERROR_FIRSTNAME$$", "")
-    signup_html = signup_html.replace("$$ERROR_LASTNAME$$", "")
-    signup_html = signup_html.replace("$$ERROR_BIO$$", "")
-
     signup_html = signup_html.replace("$$FIRSTNAME$$", "")
     signup_html = signup_html.replace("$$LASTNAME$$", "")
     signup_html = signup_html.replace("$$EMAIL$$", "")
@@ -138,7 +131,9 @@ def signupPage():
     return signup_html
 
 
-@app.route("/login", methods=["GET", "POST"])
+
+# Login page route: handles user login via GET and POST methods
+@app.route("/petsona/login", methods=["GET", "POST"])
 def login():
     email_error = ""
     password_error = ""
@@ -147,13 +142,12 @@ def login():
         email = login_form.get('email', '').strip()
         password = login_form.get('password', '').strip()
         users = load_json_file(users_json_file)
-
-        # 1. Validate empty fields (returns a dict of errors)
+        
         field_errors = validate_login_fields(email, password)
         email_error = field_errors.get("email", "")
         password_error = field_errors.get("password", "")
 
-        # 2. Only continue if no field errors
+        
         if not field_errors:
             user, user_error = validate_user_exists(email, users)
             if user_error:
@@ -167,63 +161,81 @@ def login():
                     session["username"] = username
                     return redirect(url_for('get_user_profile', username=username))
 
-        # Show form with errors if any
         html = get_html("login_form")
         html = html.replace("$$ERROR_EMAIL$$", email_error)
         html = html.replace("$$ERROR_PASS$$", password_error)
+        html = html.replace("$$EMAIL$$", email)
+        html = html.replace("$$PASSWORD$$", password)
         return html
 
-    # GET request: show empty form
+    
     html = get_html("login_form")
     html = html.replace("$$ERROR_EMAIL$$", "")
     html = html.replace("$$ERROR_PASS$$", "")
+    html = html.replace("$$EMAIL$$", "")
+    html = html.replace("$$PASSWORD$$", "")
     return html
 
 
-@app.route("/trial_quiz",methods=["GET","POST"])
-def trial_quiz_page():
-    if request.method == 'POST':
-        # Collect answers
-        answer_q1 = request.form.get('q1')
-        answer_q2 = request.form.get('q2')
-        answer_q3 = request.form.get('q3')
-        answer_q4 = request.form.get('q4')
-        answer_q5 = request.form.get('q5')
-        answer_q6 = request.form.get('q6')
+# Quiz page route: serves quiz form and handles quiz submissions for registered and guest users
+@app.route("/petsona/quiz", methods=["GET", "POST"])
+def quiz_page():
+    username = request.args.get("username", None)  
 
-    # Put them into a dictionary for processing
-        answers = {
-        'q1': answer_q1,
-        'q2': answer_q2,
-        'q3': answer_q3,
-        'q4': answer_q4,
-        'q5': answer_q5,
-        'q6': answer_q6
-    }
+    is_registered = bool(username)
 
-        # Process answers
-        scores = trial_quiz.calculate_scores(answers)
-        final_result = trial_quiz.get_final_result(scores,answers)
+    if is_registered:
+        quiz_questions_file = quiz_ques_file
+        quiz_title = "Quiz"
+        form_action = f"/petsona/quiz?username={username}"
+    else:
+        quiz_questions_file = trial_quiz_ques_file
+        quiz_title = "Trial Quiz"
+        form_action = "/petsona/quiz"  
 
-        # Store result in session
-        encoded_result = urlencode(final_result)
+    with open(quiz_questions_file, "r", encoding="utf-8") as f:
+        lines = f.read().strip().splitlines()
 
-        # Redirect to result page with result in URL
-        return redirect(url_for('quiz_result')+ '?' +encoded_result+ '&username=guest')
+    if request.method == "POST":
+        answers = {}
+        question_number = 1
+        for line in lines:
+            q_key = f'q{question_number}'
+            answers[q_key] = request.form.get(q_key)
+            question_number += 1
+        
+        if is_registered:
+            scores = quiz.calculate_scores(answers)
+            submitted_at = datetime.datetime.utcnow().isoformat() + 'Z'
+            quiz.save_result(username, answers, scores, submitted_at)
+            quiz.save_quiz_answers(username, answers, submitted_at)
+            return redirect(url_for('quiz_result', username=username))
+        else:
+            scores = trial_quiz.calculate_scores(answers)
+            final_result = trial_quiz.get_final_result(scores, answers)
+            encoded_result = urlencode(final_result)
+            return redirect(url_for('quiz_result') + '?' + encoded_result + '&username=guest')
 
-    # For GET requests, serve the static quiz page
-    return get_html("trial_quiz_page") #your static quiz HTML loader
-@app.route("/quiz_result")
+    quiz_form_html = generate_quiz_form_html(lines, form_action, is_trial=not is_registered, username=username)
+
+    html_content = get_html("generic_quiz")
+    html_content = html_content.replace("$$QUIZ_TITLE$$", quiz_title)
+    html_content = html_content.replace("$$QUIZ_FORM$$", quiz_form_html)
+
+    return html_content
+
+
+
+
+# Quiz result page route: displays the result of the most recent or trial quiz
+@app.route("/petsona/quiz_result")
 def quiz_result():
-    encoded_result = request.args.get('result', 'No result found.')
-    username = request.args.get('username', None)  # Optional username from URL
+    username = request.args.get('username', None) 
 
-    # Default guest values
     first_name = "Guest"
     is_guest = True
     user = None
 
-    # Try to find user if username provided
     if username:
         users = load_json_file(users_json_file)
         for u in users:
@@ -233,15 +245,11 @@ def quiz_result():
                 is_guest = False
                 break
 
-    # Prepare variables for rendering
     if user is None:
-        # Guest user or username not found
-        # Extract quiz result directly from URL parameters
         dominant_trait = request.args.get('dominant_trait', 'Unknown')
         description = request.args.get('description', '')
         pet_type = request.args.get('pet_type', 'Unknown')
     else:
-        # Registered user with quiz history
         quiz_history = user.get("quiz_history", [])
         if not quiz_history:
             return "No quiz results found", 404
@@ -251,34 +259,30 @@ def quiz_result():
         description = latest_quiz.get("description", "")
         pet_type = latest_quiz.get("pet_type", "Unknown")
 
-    # Escape all for safe HTML output
+
     safe_first_name = html.escape(first_name)
     pet_type_safe = html.escape(pet_type)
     dominant_trait_safe = html.escape(dominant_trait)
-    description_safe = html.escape(description).replace('\n', '<br>')
 
-    # Choose button based on guest or registered user
     if is_guest:
         button_html = '''
-        <a href="/signup">
+        <a href="/petsona/signup">
           <button id="sign-up-btn" class="nav-btn">Sign Up Now!</button>
         </a>
         '''
         safe_username = ""
     else:
         button_html = f'''
-        <a href="/profile/{username}">
+        <a href="/petsona/profile/{username}">
           <button id="profile-btn" class="nav-btn">Go Back to Profile</button>
         </a>
         '''
         safe_username = username
 
-    # Load your static HTML template
     html_content = get_html("quiz_result_page")
-    # Replace placeholders
     html_content = html_content.replace('$$PET_TYPE$$', pet_type_safe)
     html_content = html_content.replace('$$DOMINANT_TRAIT$$', dominant_trait_safe)
-    html_content = html_content.replace('$$DESCRIPTION$$', description_safe)
+    html_content = html_content.replace('$$DESCRIPTION$$', description)
     html_content = html_content.replace('$$FIRSTNAME$$', safe_first_name)
     html_content = html_content.replace('$$USERNAME$$', safe_username)
     html_content = html_content.replace('$$BUTTON$$', button_html)
@@ -286,13 +290,13 @@ def quiz_result():
     return html_content
 
 
-@app.route("/profile/<username>")
+# User profile page route: displays the profile and quiz history for a user
+@app.route("/petsona/profile/<username>")
 def get_user_profile(username):
     if 'username' not in session:
         return redirect(url_for('login'))
     
     if session['username'].lower() != username.lower():
-        # Optionally, redirect to their own profile, or show 403 Forbidden
         return redirect(url_for('login'))
     users = load_json_file(users_json_file)
 
@@ -331,108 +335,40 @@ def get_user_profile(username):
     return response
 
 
-
-@app.route("/quiz",methods=["GET","POST"])    
-def quiz_page():
-    username = request.args.get("username")  # Get username from URL params
-
-    submitted_at = datetime.datetime.utcnow().isoformat() + 'Z'
-
-    if not username:
-        return "Username is required", 400
-
-    if request.method == "POST":
-        # Process quiz submission here
-        answer_q1 = request.form.get('q1')
-        answer_q2 = request.form.get('q2')
-        answer_q3 = request.form.get('q3')
-        answer_q4 = request.form.get('q4')
-        answer_q5 = request.form.get('q5')
-        answer_q6 = request.form.get('q6')
-        answer_q7 = request.form.get('q7')
-        answer_q8 = request.form.get('q8')
-        answer_q9 = request.form.get('q9')
-        answer_q10 = request.form.get('q10')
-        answer_q11 = request.form.get('q11')
-        answer_q12 = request.form.get('q12')
-
-    # Put them into a dictionary for processing
-        answers = {
-        'q1': answer_q1,
-        'q2': answer_q2,
-        'q3': answer_q3,
-        'q4': answer_q4,
-        'q5': answer_q5,
-        'q6': answer_q6,
-        'q7': answer_q7,
-        'q8': answer_q8,
-        'q9': answer_q9,
-        'q10': answer_q10,
-        'q11': answer_q11,
-        'q12': answer_q12
-    }
-        scores = quiz.calculate_scores(answers)
-        quiz_result_data = quiz.get_final_result(scores, answers,submitted_at)
-        quiz.save_result(username, answers, scores,submitted_at)
-        quiz.save_quiz_answers(username, answers, submitted_at)
-
-        # Store result in session
-        quiz_result_html = quiz.get_final_result(scores, answers,submitted_at)
-
-        return redirect(url_for('quiz_result', username=username))
-
-    # GET request: render quiz page
-    html_content = get_html("quiz_page")
-    html_content = html_content.replace("$$USERNAME$$", html.escape(username))
-    return html_content
-
-
-   
-
-
-@app.route("/quiz_history")
+# Quiz history page route: shows all previous quizzes for the user
+@app.route("/petsona/quiz_history")
 def quiz_history():
-    # 1. Get the username from the URL, e.g. /quiz_history?username=johndoe
     username = request.args.get("username")
     if not username:
-        return "Username is required", 400  # If no username, return error
+        return "Username is required", 400  
 
-    # 2. Load all users from your data source (JSON file)
     users = load_json_file(users_json_file)
-
-    # 3. Find the user with the matching username (case-insensitive)
     user = None
+
     for u in users:
         if u['username'].lower() == username.lower():
             user = u
             break
 
     if not user:
-        return "User not found", 404  # If user not found, return error
+        return "User not found", 404
 
-    # 4. Get the user's quiz history or empty list if none
     quiz_history = user.get("quiz_history", [])
 
-    # 5. Load the HTML template for showing quiz history
     html_content = get_html("show_previous_quizzes")
 
-    # 6. Convert quiz history to JSON string and escape it for safety
-
     quiz_history_json = html.escape(json.dumps(quiz_history))
-
-    # 7. Replace placeholders in the HTML template:
-    #    - Replace $$USERNAME$$ with the user's first name (or "Guest" if missing)
-    #    - Replace $$QUIZ_HISTORY_JSON$$ with the JSON string of quiz history
     first_name = user.get("first_name", "Guest")
+
     html_content = html_content.replace("$$FIRSTNAME$$", html.escape(first_name))
     html_content = html_content.replace("$$USERNAME$$", html.escape(username))
     html_content = html_content.replace("$$QUIZ_HISTORY_JSON$$", quiz_history_json)
 
-    # 8. Return the final HTML page to the browser
     return html_content
     
 
-@app.route("/edit_profile",methods=["GET","PATCH"])
+# Edit profile page route: serves and updates user profile info via GET and PATCH methods
+@app.route("/petsona/edit_profile",methods=["GET","PATCH"])
 def edit_profile():
     username=request.args.get("username")
     users = load_json_file(users_json_file)
@@ -447,7 +383,6 @@ def edit_profile():
     if request.method == 'GET':
         accept = request.headers.get('Accept', '')
         if 'application/json' in accept:
-            # Return JSON data for API calls
             profile_data = {
                 "first_name": user.get("first_name", ""),
                 "last_name": user.get("last_name", ""),
@@ -456,10 +391,9 @@ def edit_profile():
             }
             return jsonify(profile_data)
         else:
-            # Return HTML page for normal browser requests
-            html_content = get_html('edit_profile_page')  # your custom function
+            html_content = get_html('edit_profile_page')  
             html_content = html_content.replace("$$USERNAME$$", html.escape(username))
-            return html_content  # Flask serves as text/html
+            return html_content 
 
     if request.method == 'PATCH':
         data = request.get_json()
@@ -481,11 +415,16 @@ def edit_profile():
                 else:
                     user[user_key] = data[frontend_key]
 
-        load_json_file(users_json_file)
+        save_json_file(users_json_file, users)
         return jsonify({"message": "Profile updated successfully"})
     
-@app.route('/edit_quiz', methods=['GET', 'PATCH'])
+
+
+# Edit quiz page route: serves and updates a specific quiz entry via GET and PATCH methods
+@app.route('/petsona/edit_quiz', methods=['GET', 'PATCH'])
 def edit_quiz():
+    print("edit_quiz route called, method:", request.method)
+
     username = request.args.get('username')
     submitted_at = request.args.get('submitted_at')
 
@@ -494,19 +433,17 @@ def edit_quiz():
 
     quizzes = load_json_file(quizzes_json_file)
 
-    try:
         norm_submitted_at = datetime.datetime.fromisoformat(submitted_at.replace('Z', '+00:00')).replace(microsecond=0)
-    except Exception:
+
         return jsonify({"error": "Invalid submitted_at format"}), 400
 
-    quiz_enry = None
+    quiz_entry = None
     for q in quizzes:
         q_username = q.get('username', '').lower()
         q_submitted_at_str = q.get('submitted_at', '')
 
-        try:
+
             q_submitted_at = datetime.datetime.fromisoformat(q_submitted_at_str.replace('Z', '+00:00')).replace(microsecond=0)
-        except Exception:
             continue
 
         if q_username == username.lower() and q_submitted_at == norm_submitted_at:
@@ -517,21 +454,34 @@ def edit_quiz():
         return jsonify({"error": "Quiz not found"}), 404
 
     if request.method == 'GET':
-        # Check if client expects JSON (e.g., your frontend fetch)
+        print("Accept header:", request.headers.get('Accept'))
+        answers = quiz_entry.get('answers', {})
         accept_header = request.headers.get('Accept', '')
         if 'application/json' in accept_header:
-            # Return JSON answers only
-            return jsonify({"answers": quiz_entry.get('answers', {})})
+            print("Returning JSON answers:", answers) 
+            return jsonify({"answers": answers})
 
-        # Otherwise, return the full quiz page HTML with injected answers
-        html_content = get_html("quiz_page")  # your quiz HTML template as string
+        html_content = get_html("generic_quiz")
 
-        # Inject username safely
         html_content = html_content.replace("$$USERNAME$$", html.escape(username))
+        html_content = html_content.replace("$$QUIZ_TITLE$$", "Quiz")
 
-        # Inject answers JSON safely for JS to read and pre-fill form
-        answers_json = html.escape(json.dumps(quiz_entry.get('answers', {})))
-        html_content = html_content.replace("$$ANSWERS_JSON$$", answers_json)
+
+        quiz_questions_file = quiz_ques_file 
+        with open(quiz_questions_file, "r", encoding="utf-8") as file:
+            file_lines = file.read().strip().splitlines()
+
+        form_action = f"/petsona/edit_quiz?username={username}&submitted_at={submitted_at}"
+
+        quiz_form_html = generate_quiz_form_html(
+            file_lines,
+            form_action,
+            is_trial=False,
+            username=username,
+            existing_answers=answers 
+        )
+
+        html_content = html_content.replace("$$QUIZ_FORM$$", quiz_form_html)
 
         response = make_response(html_content)
         response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
@@ -549,7 +499,10 @@ def edit_quiz():
 
         return jsonify({"message": "Quiz updated successfully","redirect_url": url_for('quiz_result', username=username)})
 
-@app.route("/delete_quiz",methods=["DELETE"])
+
+
+# Delete quiz route: deletes a specific quiz history via DELETE method
+@app.route("/petsona/delete_quiz",methods=["DELETE"])
 def delete_quiz():
     username = request.args.get('username')
     quiz_id = request.args.get('quiz_id')
@@ -570,12 +523,9 @@ def delete_quiz():
         return jsonify({"error": "User not found"}), 404
     
     quiz_history = user.get("quiz_history", [])
-
-# Store the original length of the quiz history
     original_len = len(quiz_history)
-
-# Create a new list excluding the quiz with the matching quiz_id
     new_quiz_history = []
+
     for quiz in quiz_history:
         if quiz.get("submitted_at") != quiz_id:
             new_quiz_history.append(quiz)
@@ -591,10 +541,8 @@ def delete_quiz():
     return jsonify({"message": "Quiz deleted successfully."}), 200
 
 	
-	
-	
-	
-@app.route("/logout")
+# logout route: logs out the user and cleans the session
+@app.route("/petsona/logout")
 def logout():
     session.clear()  
     return redirect(url_for("login"))
