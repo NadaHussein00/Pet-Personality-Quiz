@@ -433,8 +433,9 @@ def edit_quiz():
 
     quizzes = load_json_file(quizzes_json_file)
 
+    try:
         norm_submitted_at = datetime.datetime.fromisoformat(submitted_at.replace('Z', '+00:00')).replace(microsecond=0)
-
+    except Exception:
         return jsonify({"error": "Invalid submitted_at format"}), 400
 
     quiz_entry = None
@@ -442,8 +443,9 @@ def edit_quiz():
         q_username = q.get('username', '').lower()
         q_submitted_at_str = q.get('submitted_at', '')
 
-
+        try:
             q_submitted_at = datetime.datetime.fromisoformat(q_submitted_at_str.replace('Z', '+00:00')).replace(microsecond=0)
+        except Exception:
             continue
 
         if q_username == username.lower() and q_submitted_at == norm_submitted_at:
