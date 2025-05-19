@@ -2,7 +2,7 @@ body {
   background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqgdMmAwSpZFTVNXo8dWPNk_y8btlnhfKJVA&s");
   background-repeat: space;
   background-attachment: fixed;
-  font-family: "Segoe UI";
+  font-family: 'Mitr on';
 }
 
 body::before {
@@ -16,7 +16,7 @@ body::before {
   z-index: 0;
 }
 
-#home-page-content {
+#home-page-content,#quiz-result-page {
   position: relative;
   z-index: 1;
   max-width: 420px;
@@ -28,13 +28,21 @@ body::before {
   text-align: center;
   color: #222;
   font-size: 18px;
-  /* font-weight: 200; */
 }
 h1 {
   margin-bottom: 24px;
   font-weight: 700;
-  font-size: 1.9rem;
+  font-size: 30.4px;
 }
+
+#home-page-content h1{
+  font-family: 'Fredoka One'; 
+  font-size: 50px; 
+  color: #FF6F61; 
+  text-shadow: 2px 2px 5px black;
+}
+
+
 
 #user-choice,
 #loggedin-user {
@@ -43,7 +51,80 @@ h1 {
 
 #signup-paragraph {
   margin-bottom: 12px;
-  font-size: 1.1rem;
+  font-size: 17.6px;
+}
+
+#signup-form label input,
+#edit-profile-form label input, 
+#login-form label input
+ {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 16px;
+}
+
+
+
+ .reg-form-row, .edit-profile-row, .login-form-row{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.reg-form-row label,
+.edit-profile-row label,
+.login-form-row label{
+  margin-bottom: 6px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.reg-form-row input,
+.reg-form-row select,
+.reg-form-row textarea,
+.edit-profile-row input,
+.edit-profile-row select,
+.edit-profile-row textarea,
+.login-form-row input {
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.req-star {
+  color: red;
+  font-size: 17.6px;
+  margin-left: 2px;
+  display: inline-block;
+  text-align: right;
+}
+
+.error-message {
+  color: red;
+  font-size: 15.2px;
+  min-height: 19.2px;
+}
+
+.nav-btn,
+.trial-note-button-group button,
+#signup-page-content #register-btn,
+#profile-page-content #first-quiz-btn,
+#profile-page-content #another-quiz-btn,
+#profile-page-content #view-quizzes-btn,
+#profile-page-content #edit-profile-btn,
+#profile-page-content #logout-btn,
+#edit-quiz-form #submit-quiz-btn,
+#quiz-form #go-back-profile-btn,
+#quiz-history-container .manage-history-btns,
+#quiz-history-content #go-back-to-profile-btn,
+#edit-profile-page #save-changes-btn,
+#edit-profile-page #delete-account-btn,
+#edit-profile-page #go-back-profile-btn,
+#delete-quiz-modal #cancel-delete-btn,
+#delete-quiz-modal #confirm-delete-btn {
+  font-family: 'Mitr on';
+  font-size: 18px;
+  font-weight: 700; 
 }
 
 .nav-btn,
@@ -69,11 +150,11 @@ h1 {
 #edit-profile-page #go-back-profile-btn,
 #delete-quiz-modal #cancel-delete-btn,
 #delete-quiz-modal #confirm-delete-btn {
-  display: inline-block; /* allow width, height, padding */
+  display: inline-block; 
   width: 100%;
   padding: 14px 0;
   margin: 10px 0;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
@@ -95,6 +176,8 @@ h1 {
 #delete-quiz-modal #confirm-delete-btn {
   background-color: red;
 }
+
+
 
 .nav-btn:hover,
 .trial-note-button-group button:hover,
@@ -121,8 +204,9 @@ h1 {
 #delete-quiz-modal #cancel-delete-btn:hover,
 #delete-quiz-modal #confirm-delete-btn:hover {
   background-color: #0056b3;
-  box-shadow: 0 6px 14px rgba(0, 86, 179, 0.5);
+box-shadow: 0 6px 14px rgba(0, 86, 179, 0.5);
 }
+
 
 #trial-quiz-note-modal-content,
 #signup-page-content,
@@ -147,14 +231,49 @@ h1 {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 14px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  /* text-align: center; */
   color: #222;
 }
 
-.edit-profile-row {
-  display: block;
-  margin-bottom: 10px;
+
+.quiz-card:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3); 
+  cursor: pointer; 
 }
+
+.password-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px; 
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; 
+  box-sizing: border-box;
+}
+
+.reg-field-container {
+  display: flex;
+  align-items: center;
+  gap: 6px; 
+}
+
+.reg-field-container input {
+  flex: 1 1 auto; 
+  min-width: 0;   
+}
+
+
+.toggle-password {
+  position: absolute;
+  right:25px ;
+  cursor: pointer;
+  font-size: 20px;
+  color: #666;
+
+}
+
 
 #signup-page-content,
 #trial-quiz-result-page,
@@ -175,7 +294,7 @@ h1 {
 }
 
 #greeting {
-  margin-bottom: 0px; /* reduce space below h1 */
+  margin-bottom: 0px; 
 }
 #profile-page-content > p {
   font-size: 14px;
@@ -191,24 +310,23 @@ h1 {
   flex-wrap: wrap;
 }
 
+ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  display: block;
+  padding-left: 0;        
+  margin-left: 0;         
+}
+
 .trial-note-button-group {
   text-align: center;
   margin-top: 20px;
 }
 
-.bio-box {
-  display: flex;
-  align-items: center; /* vertical centering */
-  gap: 10px;
-}
-
-.bio-box label {
-  display: flex;
-  align-items: center; /* vertical centering */
-  gap: 10px;
-}
-
-#registeration-success {
+#registeration-success, #message.success {
   display: none;
   color: #155724;
   background: #d4edda;
@@ -219,10 +337,25 @@ h1 {
   text-align: center;
 }
 
-.req-star {
-  color: red;
-  display: inline-block;
+#message.error {
+  display: none;
+  color: #721c24;             
+  background: #f8d7da;         
+  border: 1px solid #f5c6cb;  
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
 }
+
+
+#message.info {
+  display: block;
+  color: #000000;
+  background-color: #efcd7c;
+  border: 1px solid #efcd7c;
+}
+
 
 .error-message-log {
   display: block;
@@ -230,24 +363,24 @@ h1 {
 }
 
 .error-message {
-  display: block;
+  display: none;
   color: red;
 }
 
-/* The Modal (background) */
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.5); 
 }
 
-/* Close button (x) */
+
 .close-btn {
   color: #aaa;
   position: absolute;
@@ -261,7 +394,7 @@ h1 {
   color: black;
 }
 
-/* Buttons */
+
 #cancel-delete-btn {
   padding: 10px 20px;
   margin-right: 10px;
@@ -277,4 +410,13 @@ h1 {
   position: absolute;
   top: 2px;
   left: 2px;
+}
+
+#message {
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 16px;
+  max-width: 400px;
 }
