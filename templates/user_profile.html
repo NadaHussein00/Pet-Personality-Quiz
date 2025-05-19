@@ -4,15 +4,16 @@
     <meta charset="UTF-8" />
     <title>$$FIRSTNAME$$'s Profile</title>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
   </head>
   <body>
-    <!-- Store username in data attribute -->
     <div
       id="profile-page-content"
       data-username="$$USERNAME$$"
       data-firstname="$$FIRSTNAME$$"
       data-quiz-history="$$QUIZ_HISTORY_JSON$$"
     >
+    <div id="message" ></div>
       <h1 id="greeting">Welcome, $$FIRSTNAME$$!</h1>
       <p>$$USERNAME$$</p>
       <p>$$BIO$$</p>
@@ -30,7 +31,7 @@
       </div>
       <div id="permenant-buttons">
         <button id="edit-profile-btn">Edit Profile</button>
-        <a id="logout-btn" href="/logout">Logout</a>
+        <a id="logout-btn" href="/petsona/logout">Logout</a>
       </div>
     </div>
 
