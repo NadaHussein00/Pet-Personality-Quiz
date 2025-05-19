@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "username": "james_doe",
+    "submitted_at": "2025-05-19T09:09:33.769748Z",
+    "answers": {
+      "q1": "dog",
+      "q2": "female",
+      "q3": "outdoors but cautious and observant",
+      "q4": "afternoon",
+      "q5": "shy",
+      "q6": "alert",
+      "q7": "with other pets",
+      "q8": "explores",
+      "q9": "quiet",
+      "q10": "depends on mood",
+      "q11": "talks/talktive",
+      "q12": "stubborn"
+    },
+    "is_modified": true,
+    "modified_at": "2025-05-19T11:55:15.599409Z"
+  }
+]
