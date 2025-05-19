@@ -36,9 +36,13 @@ at least one example of a class definition in your code as
 well as the names of two properties and two methods.
 
     ➡️ File name for the class definition: app/models/quiz_class.py
+    
     ➡️ Line number(s) for the class definition: line 10 : line 88
+    
     ➡️ Name of two properties: questions and descriptions
+    
     ➡️ Name of two methods: load_questions and get_questions
+    
     ➡️ File name and line numbers where the methods are used: file name -> app/models/quiz_class.py and line numbers -> line 19 : line 71
 ✅ It makes use of JavaScript in the front end and uses the 
 localStorage of the web browser.
