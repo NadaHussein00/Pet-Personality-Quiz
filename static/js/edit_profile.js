@@ -1,11 +1,12 @@
 import { validateForm, clearErrors, showError } from "./validate_form.js";
 
+// Retrieves the username from the URL query parameters
 function getUsernameFromUrl() {
   const params = new URLSearchParams(window.location.search);
   return params.get("username");
 }
 
-// Helper function to get current form values
+// Gets the current values from the form fields, trimmed of whitespace
 function getCurrentFormValues() {
   return {
     "first-name": document.getElementById("first-name").value.trim(),
@@ -18,117 +19,105 @@ function getCurrentFormValues() {
   };
 }
 
-// Simple function to check if any field changed
 
+// Checks if any form field values have changed compared to original values
 function hasChanges(currentValues, originalValues) {
   for (const key in currentValues) {
     const current = currentValues[key];
     const original =
       originalValues[key] === undefined ? "" : originalValues[key];
     if (current !== original) {
-      return true; // Found a difference
+      return true;
     }
   }
-  return false; // No differences found
+  return false;
 }
 
-const username = getUsernameFromUrl(); // dynamically set this as needed
-
-// Store original user data globally for comparison
+const username = getUsernameFromUrl();
 let originalValues = {};
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    // Fetches the user's profile data and populates the form fields
     const response = await fetch(
-      `/edit_profile?username=${encodeURIComponent(username)}`,
+      `/petsona/edit_profile?username=${encodeURIComponent(username)}`,
       { headers: { Accept: "application/json" } }
     );
     if (!response.ok) throw new Error("Failed to load profile data");
     const data = await response.json();
 
-    // Save original values for later comparison
     originalValues = {
       "first-name": data.first_name || "",
       "last-name": data.last_name || "",
       "bio-edit": data.bio || "",
     };
 
-    // Fill form fields with fetched data
     document.getElementById("first-name").value = originalValues["first-name"];
     document.getElementById("last-name").value = originalValues["last-name"];
     document.getElementById("bio-edit").value = originalValues["bio-edit"];
   } catch (err) {
-    console.error(err);
-    // Optionally show an error message to user
+    // Displays an error message if profile data fails to load
+    const messageDiv = document.getElementById("message");
+  messageDiv.className = "";
+  messageDiv.classList.add("error");
+  messageDiv.textContent = "An error occurred while loading profile data. Please try again.";
+  messageDiv.style.display = "block";
+
   }
 
-  // Handle form submission to PATCH update profile
+  // Handles form submission, validates input, and updates profile via PATCH request
   document
     .getElementById("edit-profile-form")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      clearErrors(); // Clear previous validation errors (implement or import this)
+      clearErrors(); 
 
       const updatedData = getCurrentFormValues();
 
-      // Check if there are any changes
       if (!hasChanges(updatedData, originalValues)) {
         const messageDiv = document.getElementById("message");
-        messageDiv.style.color = "blue";
-        messageDiv.textContent =
-          "No changes detected. Please update at least one field before saving.";
-        return; // Do not submit if no changes
+  messageDiv.className = ""; 
+  messageDiv.style.display = "none"; 
+
+  messageDiv.classList.add("info");
+  messageDiv.textContent = "No changes detected. Please update at least one field before saving.";
+  messageDiv.style.display = "block";
+  return;
       }
 
-      // Define error span IDs for your form fields
       const errorIds = {
         "first-name": "error-firstname",
         "last-name": "error-lastname",
-        bio: "error-bio-edit",
+        "bio-edit": "error-bio-edit",
         password: "error-password-edit",
         "confirm-password": "error-confirm-password-edit",
       };
 
-      // Call generic validation runner
       const isValid = validateForm(
         updatedData,
         originalValues,
         errorIds,
         { passwordRequired: false, bioMaxWords: 100 },
-        showError // pass your showError function to display errors
+        showError 
       );
 
       if (!isValid) {
-        // Validation failed, do not submit
         return;
       }
 
-      // Remove empty fields to avoid overwriting with empty strings
       Object.keys(updatedData).forEach((key) => {
         if (!updatedData[key]) delete updatedData[key];
       });
 
-      // Check if there are any changes
-      if (!hasChanges(updatedData, originalValues)) {
-        const messageDiv = document.getElementById("message");
-        messageDiv.style.color = "orange";
-        messageDiv.textContent =
-          "No changes detected. Please update at least one field before saving.";
-        return; // Do not submit if no changes
-      }
-
-      // Optional: Add your validation here before submitting
-      // e.g. if (!validateEditProfileForm(updatedData)) return;
-
-      // Remove empty fields to avoid overwriting with empty strings
       Object.keys(updatedData).forEach((key) => {
         if (!updatedData[key]) delete updatedData[key];
       });
 
       try {
+        // Sends the updated profile data to the server
         const response = await fetch(
-          `/edit_profile?username=${encodeURIComponent(username)}`,
+          `/petsona/edit_profile?username=${encodeURIComponent(username)}`,
           {
             method: "PATCH",
             headers: {
@@ -143,19 +132,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const messageDiv = document.getElementById("message");
         if (response.ok) {
-          messageDiv.style.color = "green";
-          messageDiv.textContent = result.message;
-          // Update originalValues to current values after successful save
+          messageDiv.className = "";
+          messageDiv.classList.add("success");
+          messageDiv.textContent = result.message || "Profile updated successfully";
+          messageDiv.style.display = "block";
           originalValues = { ...originalValues, ...updatedData };
         } else {
           messageDiv.style.color = "red";
           messageDiv.textContent = result.error || "Failed to update profile";
         }
       } catch (err) {
-        console.error(err);
+        // Displays a network error message if the PATCH request fails
         const messageDiv = document.getElementById("message");
-        messageDiv.style.color = "red";
-        messageDiv.textContent = "Network error";
+        messageDiv.className = "";
+        messageDiv.classList.add("error");
+        messageDiv.textContent = "Network error. Please check your connection and try again.";
+        messageDiv.style.display = "block";
       }
     });
 });
