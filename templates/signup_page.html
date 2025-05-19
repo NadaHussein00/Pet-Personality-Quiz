@@ -3,121 +3,98 @@
   <head>
     <title>Sign Up</title>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Mitr&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="signup-page-content">
-      <h1>Please fill in all the REQUIRED fields:</h1>
-      <form method="POST" action="/signup" id="signup-form" novalidate>
-        <label
-          >Enter your first name:
-          <input
-            type="text"
-            id="first-name-reg"
-            name="firstname"
-            value="$$FIRSTNAME$$"
-            required
-          />
-          <p class="req-star">*</p>
-          <span class="error-message" id="error-firstname-reg"
-            >$$ERROR_FIRSTNAME$$</span
-          > </label
-        ><br />
-        <label
-          >Enter your last name:
-          <input
-            type="text"
-            id="last-name-reg"
-            name="lastname"
-            value="$$LASTNAME$$"
-            required
-          />
-          <p class="req-star">*</p>
-          <span class="error-message" id="error-lastname-reg"
-            >$$ERROR_LASTNAME$$</span
-          > </label
-        ><br />
+      <h1>Almost there! Just a few details to get started.</h1>
 
-        <label
-          >Gender:
+      <form method="POST" action="/petsona/signup" id="signup-form" novalidate>
+        <div class="reg-form-row">
+          <label>Enter your first name:</label>
+          <div class="reg-field-container">
+            <input type="text" id="first-name-reg" name="firstname" value="$$FIRSTNAME$$" required />
+          <span class="req-star">*</span>
+          </div>
+          
+          <span class="error-message" id="error-firstname-reg"></span>
+        </div>
+      
+        <div class="reg-form-row">
+          <label>Enter your last name:</label>
+          <div class="reg-field-container">
+            <input type="text" id="last-name-reg" name="lastname" value="$$LASTNAME$$" required />
+            <span class="req-star">*</span>
+          </div>
+          
+          <span class="error-message" id="error-lastname-reg"></span>
+        </div>
+      
+        <div class="reg-form-row">
+          <label>Gender:</label>
           <select name="gender" id="gender-drop-down">
             <option value="">- Select Gender -</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-        </label>
-        <br />
-        <label
-          >Enter your email:
-          <input
-            type="text"
-            id="email-reg"
-            name="email"
-            required
-            value="$$EMAIL$$"
-          />
-          <p class="req-star">*</p>
-          <span class="error-message" id="error-email-reg"
-            >$$ERROR_EMAIL$$</span
-          > </label
-        ><br />
-        <label
-          >Enter your username:
-          <input
-            type="text"
-            id="username-reg"
-            name="username"
-            value="$$USERNAME$$"
-            required
-          />
-          <p class="req-star">*</p>
-          <span class="error-message" id="error-username-reg"
-            >$$ERROR_USERNAME$$</span
-          > </label
-        ><br />
-        <label
-          >Password:
-          <input type="password" name="password" id="password-reg" required />
-          <p class="req-star">*</p>
-          <span class="error-message" id="error-password-reg"></span> </label
-        ><br />
-        <label
-          >Password confirmation:
-          <input
-            type="password"
-            name="password-confirm"
-            id="password-confirm-reg"
-            required
-          />
-          <p class="req-star">*</p>
-          <span
-            class="error-message"
-            id="error-confirm-pass-reg"
-          ></span> </label
-        ><br />
-        <div class="bio-box">
-          <label>
-            Bio (optional):
-            <textarea
-              id="bio-reg"
-              name="bio"
-              rows="4"
-              cols="40"
-              placeholder="Tell us about yourself..."
-            >
-$$BIO$$</textarea
-            >
-            <span class="error-message" id="error-bio-reg">$$ERROR_BIO$$</span>
-          </label>
         </div>
-
-        <br />
-
+      
+        <div class="reg-form-row">
+          <label>Enter your email:</label>
+          <div class="reg-field-container">
+            <input type="text" id="email-reg" name="email" required value="$$EMAIL$$" />
+            <span class="req-star">*</span>
+          </div>
+          
+          <span class="error-message" id="error-email-reg"></span>
+        </div>
+      
+        <div class="reg-form-row">
+          <label>Enter your username:</label>
+          <div class="reg-field-container">
+            <input type="text" id="username-reg" name="username" value="$$USERNAME$$" required />
+            <span class="req-star">*</span>
+          </div>
+          
+          <span class="error-message" id="error-username-reg"></span>
+        </div>
+      
+        <div class="reg-form-row">
+          <label>Password:</label>
+          <div class="reg-field-container password-container">
+            <input type="password" name="password" id="password-reg" required />
+            <span class="toggle-password" data-target="password-reg">&#128065;</span>
+            <span class="req-star">*</span>
+          </div>
+          
+          <span class="error-message" id="error-password-reg"></span>
+        </div>
+      
+        <div class="reg-form-row">
+          <label>Password confirmation:</label>
+          <div class="reg-field-container password-container">
+            <input type="password" name="password-confirm" id="password-confirm-reg" required />
+            <span class="toggle-password" data-target="password-confirm-reg">&#128065;</span>
+            <span class="req-star">*</span>
+          </div>
+          
+          <span class="error-message" id="error-confirm-pass-reg"></span>
+        </div>
+      
+        <div class="reg-form-row">
+          <label>Bio (Optional):</label>
+          <textarea id="bio-reg" name="bio" rows="4" cols="40" placeholder="Tell us about yourself...">$$BIO$$</textarea>
+          <span class="error-message" id="error-bio-reg"></span>
+        </div>
+      
         <button type="submit" id="register-btn">Register Now!</button>
       </form>
+      
 
-      <p>Already have an account? <a href="/login">Login</a></p>
+      <p>Already have an account? <a href="/petsona/login">Login</a></p>
     </div>
 
-    <script type="module" src="static/js/signup_form.js"></script>
+    <script type="module" src="/static/js/signup_form.js"></script>
+    <script type="module" src="/static/js/toggle_eye_icon_password.js"></script>
   </body>
 </html>
