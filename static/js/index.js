@@ -1,22 +1,24 @@
 document.addEventListener("click", () => {
-  const trialQuiz = document.getElementById("trial-quiz-btn");
-  const trialQuizNoteModal = document.getElementById("trial-quiz-note-modal");
-  const closeTrialQuiznoteBtn = document.getElementById(
-    "close-trial-quiz-note-modal-btn"
-  );
-
-  trialQuiz.addEventListener("click", () => {
-    trialQuizNoteModal.style.display = "block";
+    const trialQuiz = document.getElementById("trial-quiz-btn");
+    const trialQuizNoteModal = document.getElementById("trial-quiz-note-modal");
+    const closeTrialQuiznoteBtn = document.getElementById(
+      "close-trial-quiz-note-modal-btn"
+    );
+  
+    // Show the trial quiz note modal when the trial quiz button is clicked
+    trialQuiz.addEventListener("click", () => {
+      trialQuizNoteModal.style.display = "block";
+    });
+  
+    // Hide the trial quiz note modal when the close button is clicked
+    closeTrialQuiznoteBtn.addEventListener("click", () => {
+      trialQuizNoteModal.style.display = "none";
+    });
+  
+     // Close the modal if clicking outside the modal content (on the overlay)
+    trialQuizNoteModal.addEventListener("click", (event) => {
+      if (event.target === trialQuizNoteModal) {
+        trialQuizNoteModal.style.display = "none"; 
+      }
+    });
   });
-
-  closeTrialQuiznoteBtn.addEventListener("click", () => {
-    trialQuizNoteModal.style.display = "none";
-  });
-
-  trialQuizNoteModal.addEventListener("click", (event) => {
-    // If the clicked element is the overlay itself (not the modal content)
-    if (event.target === trialQuizNoteModal) {
-      trialQuizNoteModal.style.display = "none"; // Close the modal
-    }
-  });
-});
